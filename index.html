@@ -446,7 +446,7 @@ function renderCards(){
   var grid=document.getElementById('grid');
   if(!filtered.length){grid.innerHTML='<div class="empty">Nessun box trovato.</div>';return;}
 
-  var isMobile = window.innerWidth <= 480;
+  var isMobile = /iPhone|Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 600;
   var html='',i=0,phase=0;
 
   if(isMobile){
