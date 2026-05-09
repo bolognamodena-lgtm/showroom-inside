@@ -53,6 +53,7 @@ body{font-family:'DM Sans',sans-serif;background:#0a0f1e;min-height:100vh;color:
 .card-badge{position:absolute;top:14px;left:18px;font-size:10px;font-weight:700;padding:4px 10px;border-radius:20px;z-index:3;}
 .card-badge.disponibile{background:rgba(34,197,94,.9);color:#fff;}
 .card-badge.trattativa{background:rgba(245,196,0,.9);color:#0a0f1e;}
+.card-badge.confermare{background:rgba(167,139,250,.9);color:#fff;}
 .card-badge.venduto{background:rgba(239,68,68,.9);color:#fff;}
 .card-attachments{position:absolute;top:14px;right:18px;background:rgba(0,0,0,.5);border-radius:20px;padding:3px 8px;font-size:10px;color:rgba(255,255,255,.8);z-index:3;}
 .card-overlay{position:absolute;inset:0;background:rgba(5,15,40,.75);opacity:0;transition:opacity .35s ease;z-index:2;}
@@ -190,6 +191,7 @@ body{font-family:'DM Sans',sans-serif;background:#0a0f1e;min-height:100vh;color:
       <button class="chip active" data-group="stato" data-val="Tutti" onclick="setChip(this,'stato')">Tutti</button>
       <button class="chip" data-group="stato" data-val="Disponibile" onclick="setChip(this,'stato')">✅ Disponibile</button>
       <button class="chip" data-group="stato" data-val="In trattativa" onclick="setChip(this,'stato')">🟡 In trattativa</button>
+      <button class="chip" data-group="stato" data-val="Da confermare" onclick="setChip(this,'stato')">🔵 Da confermare</button>
       <button class="chip" data-group="stato" data-val="Venduto" onclick="setChip(this,'stato')">🔴 Venduto</button>
     </div>
     <select id="filtroNegozio" class="filtri-select" onchange="renderCards()">
@@ -290,7 +292,8 @@ body{font-family:'DM Sans',sans-serif;background:#0a0f1e;min-height:100vh;color:
           <div class="stati">
             <button type="button" class="stato-btn" id="s0" onclick="setStato('Disponibile')">Disp.</button>
             <button type="button" class="stato-btn" id="s1" onclick="setStato('In trattativa')">Tratt.</button>
-            <button type="button" class="stato-btn" id="s2" onclick="setStato('Venduto')">Vend.</button>
+            <button type="button" class="stato-btn" id="s2" onclick="setStato('Da confermare')">Conf.</button>
+            <button type="button" class="stato-btn" id="s3" onclick="setStato('Venduto')">Vend.</button>
           </div>
         </div>
       </div>
@@ -396,7 +399,7 @@ function setChip(el,group){
 
 function makeCard(b,extraClass){
   var img=fotoUrl(b.foto);
-  var sc=b.stato==='Disponibile'?'disponibile':b.stato==='In trattativa'?'trattativa':'venduto';
+  var sc=b.stato==='Disponibile'?'disponibile':b.stato==='In trattativa'?'trattativa':b.stato==='Da confermare'?'confermare':'venduto';
   var hasExtra=(b.fotogallery&&b.fotogallery.length)||(b.documenti&&b.documenti.length);
   return '<div class="card '+(extraClass||'')+'" onclick="openModal(\''+b.id+'\')" onmouseenter="cardHover(this,true)" onmouseleave="cardHover(this,false)" style="flex:1;min-width:0;">'+
     '<span class="card-badge '+sc+'">'+b.stato+'</span>'+
@@ -537,7 +540,7 @@ function deleteSelected(){
 
 function setStato(s){
   formStato=s;
-  var map={'Disponibile':{id:'s0',col:'#4ade80',bg:'rgba(34,197,94,.15)'},'In trattativa':{id:'s1',col:'#f5c400',bg:'rgba(245,196,0,.15)'},'Venduto':{id:'s2',col:'#f87171',bg:'rgba(239,68,68,.15)'}};
+  var map={'Disponibile':{id:'s0',col:'#4ade80',bg:'rgba(34,197,94,.15)'},'In trattativa':{id:'s1',col:'#f5c400',bg:'rgba(245,196,0,.15)'},'Da confermare':{id:'s2',col:'#a78bfa',bg:'rgba(167,139,250,.15)'},'Venduto':{id:'s3',col:'#f87171',bg:'rgba(239,68,68,.15)'}};
   ['Disponibile','In trattativa','Venduto'].forEach(function(st){
     var el=document.getElementById(map[st].id);if(!el)return;
     if(st===s){el.style.borderColor=map[st].col;el.style.color=map[st].col;el.style.background=map[st].bg;}
