@@ -219,6 +219,9 @@ body{font-family:'DM Sans',sans-serif;background:#0a0f1e;min-height:100vh;color:
       <option value="120 – 160 cm">120 – 160 cm</option>
       <option value="Oltre 160 cm">Oltre 160 cm</option>
     </select>
+    <select id="filtroMarca" class="filtri-select" onchange="renderCards()">
+      <option value="Tutti">🏷️ Tutti i fornitori</option>
+    </select>
     <span class="count-label" id="countLabel"></span>
   </div>
 </div>
@@ -291,7 +294,9 @@ body{font-family:'DM Sans',sans-serif;background:#0a0f1e;min-height:100vh;color:
           </div>
         </div>
       </div>
-      <label class="flabel">📸 Foto principale</label>
+      <label class="flabel">🏷️ Marca / Fornitore</label>
+      <input class="finput" id="fMarca" placeholder="es. Geberit, Ideal Standard, Duravit..."/>
+
       <button type="button" class="btn-upload" onclick="uploadFoto('principale')">
         <span style="font-size:22px">📁</span>
         <span style="font-size:13px;font-weight:700;color:#f5c400">Carica foto principale</span>
@@ -347,7 +352,7 @@ body{font-family:'DM Sans',sans-serif;background:#0a0f1e;min-height:100vh;color:
 
 <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
 <script>
-var API='https://script.google.com/macros/s/AKfycbxJl4fUstYlN8kB_bwjLIONGfxMSntFFbEpvRkW-ynND7yVaMzCxOYCce5t8ov_bO0R/exec';
+var API='https://script.google.com/macros/s/AKfycbzumJ40JViBEgHk4bWfW-jpCiC-I7wMkajN0Qj0OiY7ydbf-FdwkcBeVrNkiQvlFZqr/exec';
 var ADMIN_CODE='CilaCiicai26';
 var NEGOZIO_CODES={'SH1 - Bologna/Castenaso':'SH1-2024','SH2 - Castel San Pietro Terme':'SH2-2024','SH3 - Imola Via Galeati':'SH3-2024','SH4 - Imola Via Ugo La Malfa':'SH4-2024','SH5 - Faenza':'SH5-2024','SH6 - Lugo':'SH6-2024','SH7 - Ravenna':'SH7-2024','SH8 - Cervia':'SH8-2024','SH9 - San Giuseppe':'SH9-2024','SH10 - Modena':'SH10-2024','SH11 - Sassuolo':'SH11-2024'};
 var boxes=[],authed=null,selectedBox=null,editId=null,formStato='Disponibile';
@@ -402,17 +407,30 @@ function makeCard(b,extraClass){
   '</div>';
 }
 
+function aggiornaMarcheFilter(){
+  var marche=['Tutti'];
+  boxes.forEach(function(b){ if(b.marca && b.marca.trim() && marche.indexOf(b.marca.trim())===-1) marche.push(b.marca.trim()); });
+  marche.sort();
+  var sel=document.getElementById('filtroMarca');
+  var current=sel.value;
+  sel.innerHTML=marche.map(function(m){ return '<option value="'+m+'">'+(m==='Tutti'?'🏷️ Tutti i fornitori':m)+'</option>'; }).join('');
+  sel.value=marche.indexOf(current)!==-1?current:'Tutti';
+}
+
 function renderCards(){
   var q=document.getElementById('search').value.toLowerCase();
   var fn=document.getElementById('filtroNegozio').value;
   var fs=document.getElementById('filtroStile').value;
   var fd=document.getElementById('filtroDim').value;
+  var fm=document.getElementById('filtroMarca').value;
+  aggiornaMarcheFilter();
   var filtered=boxes.filter(function(b){
     if(filtroStato!=='Tutti'&&b.stato!==filtroStato)return false;
     if(fn!=='Tutti'&&b.negozio!==fn)return false;
     if(fs!=='Tutti'&&b.stile!==fs)return false;
     if(fd!=='Tutti'&&b.dimensione!==fd)return false;
-    if(q&&(b.nome+(b.note||'')+(b.negozio||'')).toLowerCase().indexOf(q)===-1)return false;
+    if(fm!=='Tutti'&&(b.marca||'').trim()!==fm)return false;
+    if(q&&(b.nome+(b.note||'')+(b.negozio||'')+(b.marca||'')).toLowerCase().indexOf(q)===-1)return false;
     return true;
   });
   document.getElementById('countLabel').textContent=filtered.length+' box';
@@ -468,6 +486,7 @@ function openModal(id){
   document.getElementById('modalNome').textContent=selectedBox.nome;
   document.getElementById('modalChips').innerHTML=
     '<span class="modal-chip giallo">🏪 '+selectedBox.negozio+'</span>'+
+    (selectedBox.marca?'<span class="modal-chip" style="background:rgba(245,196,0,.1);color:#f5c400">🏷️ '+selectedBox.marca+'</span>':'')+
     (selectedBox.dimensione?'<span class="modal-chip">📐 '+selectedBox.dimensione+'</span>':'')+
     '<span class="modal-chip viola">✦ '+selectedBox.stile+'</span>'+
     '<span class="modal-chip" style="background:rgba(255,255,255,.08)">'+selectedBox.stato+'</span>';
@@ -499,6 +518,7 @@ function editSelected(){
   document.getElementById('fNegozio').value=selectedBox.negozio;
   document.getElementById('fStile').value=selectedBox.stile;
   document.getElementById('fDim').value=selectedBox.dimensione||'Fino a 80 cm';
+  document.getElementById('fMarca').value=selectedBox.marca||'';
   document.getElementById('fFoto').value=selectedBox.foto||'';
   document.getElementById('fNote').value=selectedBox.note||'';
   formGallery=selectedBox.fotogallery?selectedBox.fotogallery.slice():[];
@@ -566,11 +586,11 @@ function uploadFoto(tipo){
 function submitBox(){
   var nome=document.getElementById('fNome').value.trim();if(!nome)return;
   var btn=document.getElementById('btnSubmit');btn.disabled=true;btn.textContent='Salvataggio...';
-  var box={id:editId!==null?editId:Date.now(),nome:nome,negozio:document.getElementById('fNegozio').value,stile:document.getElementById('fStile').value,stato:formStato,dimensione:document.getElementById('fDim').value,foto:document.getElementById('fFoto').value,fotogallery:formGallery,documenti:formDocs,note:document.getElementById('fNote').value};
+  var box={id:editId!==null?editId:Date.now(),nome:nome,negozio:document.getElementById('fNegozio').value,stile:document.getElementById('fStile').value,stato:formStato,dimensione:document.getElementById('fDim').value,marca:document.getElementById('fMarca').value,foto:document.getElementById('fFoto').value,fotogallery:formGallery,documenti:formDocs,note:document.getElementById('fNote').value};
   apiCall({action:editId!==null?'update':'add',box:box}).then(function(){return apiGet('list');})
   .then(function(d){
     boxes=Array.isArray(d)?d.map(function(b){b.id=String(b.id);return b;}):[]; 
-    document.getElementById('fNome').value='';document.getElementById('fFoto').value='';document.getElementById('fNote').value='';document.getElementById('fDocLink').value='';
+    document.getElementById('fNome').value='';document.getElementById('fFoto').value='';document.getElementById('fNote').value='';document.getElementById('fDocLink').value='';document.getElementById('fMarca').value='';
     document.getElementById('fotoPreview').classList.add('hidden');
     document.getElementById('galleryPreview').innerHTML='';document.getElementById('docList').innerHTML='';
     formGallery=[];formDocs=[];document.getElementById('formTitle').textContent='Nuovo box';
