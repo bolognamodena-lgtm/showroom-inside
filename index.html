@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'DM Sans',sans-serif;background:#0d2d6e;min-height:100vh;color:#fff;}
+body{font-family:'DM Sans',sans-serif;background:#0a0f1e;min-height:100vh;color:#fff;}
 .header{position:sticky;top:0;z-index:50;background:rgba(10,15,30,.92);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.08);padding:0 32px;}
 .header-inner{max-width:1400px;margin:0 auto;height:70px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
 .header-left{display:flex;flex-direction:column;gap:1px;}
@@ -42,9 +42,9 @@ body{font-family:'DM Sans',sans-serif;background:#0d2d6e;min-height:100vh;color:
 .diagonal-row{display:flex;height:420px;margin-bottom:16px;position:relative;}
 .diagonal-row.small-row{height:260px;}
 .card{position:relative;cursor:pointer;overflow:hidden;background:#0a1f4d;flex-shrink:0;}
-.card.diag{clip-path:polygon(0 0, 92% 0, 100% 100%, 0% 100%);margin-right:-40px;}
+.card.diag{clip-path:polygon(0 0, 88% 0, 100% 100%, 0% 100%);margin-right:-60px;}
 .card.diag:last-child{clip-path:none;margin-right:0;}
-.card.diag-rev{clip-path:polygon(8% 0, 100% 0, 100% 100%, 0% 100%);margin-right:-40px;}
+.card.diag-rev{clip-path:polygon(12% 0, 100% 0, 100% 100%, 0% 100%);margin-right:-60px;}
 .card.diag-rev:last-child{clip-path:none;margin-right:0;}
 .card-img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.25,.46,.45,.94);}
 .card:hover .card-img{transform:scale(1.06);}
@@ -348,7 +348,7 @@ body{font-family:'DM Sans',sans-serif;background:#0d2d6e;min-height:100vh;color:
 <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
 <script>
 var API='https://script.google.com/macros/s/AKfycbxJl4fUstYlN8kB_bwjLIONGfxMSntFFbEpvRkW-ynND7yVaMzCxOYCce5t8ov_bO0R/exec';
-var ADMIN_CODE='SARA2024';
+var ADMIN_CODE='CilaCiicai26';
 var NEGOZIO_CODES={'SH1 - Bologna/Castenaso':'SH1-2024','SH2 - Castel San Pietro Terme':'SH2-2024','SH3 - Imola Via Galeati':'SH3-2024','SH4 - Imola Via Ugo La Malfa':'SH4-2024','SH5 - Faenza':'SH5-2024','SH6 - Lugo':'SH6-2024','SH7 - Ravenna':'SH7-2024','SH8 - Cervia':'SH8-2024','SH9 - San Giuseppe':'SH9-2024','SH10 - Modena':'SH10-2024','SH11 - Sassuolo':'SH11-2024'};
 var boxes=[],authed=null,selectedBox=null,editId=null,formStato='Disponibile';
 var formGallery=[],formDocs=[],filtroStato='Tutti';
@@ -420,7 +420,7 @@ function renderCards(){
   if(!filtered.length){grid.innerHTML='<div class="empty">Nessun box trovato.</div>';return;}
   var html='',i=0,rowNum=0;
   while(i<filtered.length){
-    var count=Math.min(4,filtered.length-i);
+    var count=Math.min(3,filtered.length-i);
     var diagClass=rowNum%2===0?'diag':'diag-rev';
     html+='<div class="diagonal-row">';
     for(var j=0;j<count;j++) html+=makeCard(filtered[i+j],diagClass);
