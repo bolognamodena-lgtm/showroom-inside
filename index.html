@@ -541,7 +541,7 @@ function deleteSelected(){
 function setStato(s){
   formStato=s;
   var map={'Disponibile':{id:'s0',col:'#4ade80',bg:'rgba(34,197,94,.15)'},'In trattativa':{id:'s1',col:'#f5c400',bg:'rgba(245,196,0,.15)'},'Da confermare':{id:'s2',col:'#a78bfa',bg:'rgba(167,139,250,.15)'},'Venduto':{id:'s3',col:'#f87171',bg:'rgba(239,68,68,.15)'}};
-  ['Disponibile','In trattativa','Venduto'].forEach(function(st){
+  Object.keys(map).forEach(function(st){
     var el=document.getElementById(map[st].id);if(!el)return;
     if(st===s){el.style.borderColor=map[st].col;el.style.color=map[st].col;el.style.background=map[st].bg;}
     else{el.style.borderColor='rgba(255,255,255,.15)';el.style.color='rgba(255,255,255,.4)';el.style.background='transparent';}
