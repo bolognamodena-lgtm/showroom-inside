@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Showroom Inside — CILA CIICAI</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:#0d2d6e;min-height:100vh;color:#fff;}
+
+/* HEADER */
+.header{position:sticky;top:0;z-index:50;background:rgba(10,15,30,.92);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.08);padding:0 32px;}
+.header-inner{max-width:1400px;margin:0 auto;height:70px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.header-left{display:flex;flex-direction:column;gap:1px;}
+.header-brand{font-size:20px;font-weight:900;letter-spacing:4px;color:#fff;text-transform:uppercase;line-height:1;}
+.header-brand span{color:#f5c400;}
+.header-sub{font-size:9px;letter-spacing:3px;color:rgba(255,255,255,.4);text-transform:uppercase;font-weight:400;}
+.header-center{flex:1;max-width:520px;margin:0 24px;}
+.search-wrap{position:relative;}
+.search-input{width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:50px;padding:10px 20px 10px 44px;font-size:14px;color:#fff;font-family:'DM Sans',sans-serif;outline:none;transition:all .2s;}
+.search-input::placeholder{color:rgba(255,255,255,.35);}
+.search-input:focus{background:rgba(255,255,255,.1);border-color:rgba(245,196,0,.4);}
+.search-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,.35);font-size:15px;}
+.header-right{display:flex;align-items:center;gap:12px;}
+.btn-accedi{background:transparent;border:1.5px solid #f5c400;color:#f5c400;padding:8px 20px;border-radius:50px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;white-space:nowrap;}
+.btn-accedi:hover{background:#f5c400;color:#0a0f1e;}
+.auth-badge{display:flex;align-items:center;gap:8px;background:rgba(245,196,0,.12);border:1px solid rgba(245,196,0,.3);border-radius:50px;padding:7px 16px;font-size:13px;color:#f5c400;font-weight:600;}
+.auth-x{cursor:pointer;opacity:.6;font-size:14px;}
+.btn-aggiungi{background:#f5c400;color:#0a0f1e;border:none;padding:8px 20px;border-radius:50px;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.btn-aggiungi:hover{background:#ffd700;}
+
+/* FILTRI CHIPS */
+.filtri-wrap{background:rgba(10,15,30,.95);border-bottom:1px solid rgba(255,255,255,.06);padding:0 32px;position:sticky;top:70px;z-index:40;}
+.filtri-inner{max-width:1400px;margin:0 auto;padding:12px 0;display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+.filtri-label{font-size:11px;font-weight:600;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:2px;margin-right:4px;}
+.chip{display:inline-flex;align-items:center;gap:4px;padding:6px 14px;border-radius:50px;border:1px solid rgba(255,255,255,.15);background:transparent;color:rgba(255,255,255,.6);font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;white-space:nowrap;}
+.chip:hover{border-color:rgba(245,196,0,.5);color:#fff;}
+.chip.active{background:#f5c400;border-color:#f5c400;color:#0a0f1e;font-weight:700;}
+  .filtri-select{padding:6px 28px 6px 14px;border-radius:50px;border:1px solid rgba(255,255,255,.15);background:#1e2940;color:#fff;font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='rgba(255,255,255,.5)'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;transition:all .2s;white-space:nowrap;}
+  .filtri-select:hover{border-color:rgba(245,196,0,.5);color:#f5c400;}
+  .filtri-select option{background:#1e2940;color:#fff;}
+.count-label{font-size:12px;color:rgba(255,255,255,.3);margin-left:auto;font-weight:400;}
+
+/* LAYOUT DIAGONALE */
+.layout-wrap{max-width:1400px;margin:0 auto;padding:24px 32px;}
+.diagonal-row{display:flex;height:420px;margin-bottom:16px;position:relative;}
+.diagonal-row.small-row{height:260px;}
+
+.card{position:relative;cursor:pointer;overflow:hidden;background:#0a1f4d;flex-shrink:0;}
+.card.diag{clip-path:polygon(0 0, 92% 0, 100% 100%, 0% 100%);margin-right:-40px;}
+.card.diag:last-child{clip-path:none;margin-right:0;}
+.card.diag-rev{clip-path:polygon(8% 0, 100% 0, 100% 100%, 0% 100%);margin-right:-40px;}
+.card.diag-rev:last-child{clip-path:none;margin-right:0;}
+
+.card-img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.25,.46,.45,.94),opacity .4s ease;}
+.card:hover .card-img{transform:scale(1.06);}
+.card-placeholder{width:100%;height:100%;background:linear-gradient(135deg,#0a1f4d,#163a80);display:flex;align-items:center;justify-content:center;}
+.card-initials{font-size:48px;font-weight:900;color:rgba(255,255,255,.08);}
+
+.card-badge{position:absolute;top:14px;left:18px;font-size:10px;font-weight:700;padding:4px 10px;border-radius:20px;z-index:3;}
+.card-badge.disponibile{background:rgba(34,197,94,.9);color:#fff;}
+.card-badge.trattativa{background:rgba(245,196,0,.9);color:#0a0f1e;}
+.card-badge.venduto{background:rgba(239,68,68,.9);color:#fff;}
+.card-attachments{position:absolute;top:14px;right:18px;background:rgba(0,0,0,.5);border-radius:20px;padding:3px 8px;font-size:10px;color:rgba(255,255,255,.8);z-index:3;}
+
+.card-overlay{position:absolute;inset:0;background:rgba(5,15,40,.75);opacity:0;transition:opacity .35s ease;z-index:2;}
+.card:hover .card-overlay{opacity:1;}
+.card-info{position:absolute;bottom:0;left:0;right:0;padding:24px 22px 20px;transform:translateY(10px);opacity:0;transition:all .35s ease;z-index:3;}
+.card:hover .card-info{transform:translateY(0);opacity:1;}
+.card-nome{font-size:16px;font-weight:800;color:#fff;line-height:1.3;margin-bottom:4px;}
+.card-negozio{font-size:11px;color:#f5c400;font-weight:700;letter-spacing:.5px;margin-bottom:8px;}
+.card-tags{display:flex;flex-wrap:wrap;gap:4px;}
+.card-tag{font-size:10px;font-weight:600;padding:3px 8px;border-radius:20px;background:rgba(255,255,255,.15);color:rgba(255,255,255,.85);}
+
+.empty{text-align:center;padding:80px;color:rgba(255,255,255,.3);font-size:16px;}
+.loading{text-align:center;padding:80px;color:rgba(255,255,255,.3);font-size:14px;}
+
+@media(max-width:768px){
+  .diagonal-row{flex-direction:column;height:auto;}
+  .card.diag,.card.diag-rev{clip-path:none;margin-right:0;margin-bottom:8px;height:220px;}
+}
+
+/* MODAL */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:flex-end;justify-content:center;z-index:100;backdrop-filter:blur(8px);}
+.modal{background:#0f172a;border-radius:24px 24px 0 0;width:100%;max-width:680px;max-height:92vh;overflow:auto;border:1px solid rgba(255,255,255,.08);}
+.modal-hero{width:100%;max-height:380px;object-fit:contain;background:#060d1f;display:block;}
+.modal-hero-placeholder{width:100%;height:200px;background:linear-gradient(135deg,#1a2744,#0d2d6e);display:flex;align-items:center;justify-content:center;font-size:64px;font-weight:900;color:rgba(255,255,255,.15);}
+.modal-close{position:absolute;top:14px;right:16px;background:rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.15);color:#fff;border-radius:50%;width:34px;height:34px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;z-index:10;font-family:'DM Sans',sans-serif;}
+.modal-body{padding:24px;position:relative;}
+.modal-nome{font-size:24px;font-weight:800;color:#fff;margin-bottom:12px;}
+.modal-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px;}
+.modal-chip{font-size:12px;font-weight:600;padding:5px 12px;border-radius:20px;background:rgba(255,255,255,.08);color:rgba(255,255,255,.7);}
+.modal-chip.giallo{background:rgba(245,196,0,.15);color:#f5c400;}
+.modal-chip.viola{background:rgba(124,58,237,.15);color:#a78bfa;}
+.modal-note{font-size:14px;color:rgba(255,255,255,.6);line-height:1.7;background:rgba(255,255,255,.04);border-radius:12px;padding:14px 16px;margin-bottom:20px;border-left:3px solid #f5c400;}
+.modal-section{font-size:11px;font-weight:700;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:2px;margin-bottom:12px;margin-top:20px;}
+.modal-gallery{display:flex;flex-wrap:wrap;gap:8px;}
+.modal-gallery-img{width:80px;height:80px;border-radius:10px;object-fit:cover;cursor:pointer;border:2px solid rgba(255,255,255,.1);transition:border-color .2s;}
+.modal-gallery-img:hover{border-color:#f5c400;}
+.modal-docs{display:flex;flex-direction:column;gap:8px;}
+.modal-doc{display:flex;align-items:center;gap:10px;padding:12px 14px;background:rgba(255,255,255,.04);border-radius:12px;border:1px solid rgba(255,255,255,.08);text-decoration:none;transition:background .2s;}
+.modal-doc:hover{background:rgba(255,255,255,.08);}
+.modal-doc-icon{font-size:20px;}
+.modal-doc-name{font-size:13px;color:rgba(255,255,255,.8);font-weight:500;flex:1;}
+.modal-doc-arrow{font-size:12px;color:rgba(255,255,255,.3);}
+.modal-actions{display:flex;gap:10px;margin-top:24px;}
+.btn-edit{flex:1;padding:13px;border:1.5px solid rgba(255,255,255,.2);border-radius:12px;color:#fff;font-weight:700;font-size:13px;cursor:pointer;background:transparent;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.btn-edit:hover{border-color:#fff;background:rgba(255,255,255,.05);}
+.btn-del{flex:1;padding:13px;border:1.5px solid rgba(239,68,68,.4);border-radius:12px;color:#f87171;font-weight:700;font-size:13px;cursor:pointer;background:transparent;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.btn-del:hover{background:rgba(239,68,68,.08);}
+
+/* FORM PANEL */
+.form-panel{position:fixed;inset:0;z-index:200;display:flex;align-items:flex-end;justify-content:center;}
+.form-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(8px);}
+.form-sheet{position:relative;background:#0f172a;border-radius:24px 24px 0 0;width:100%;max-width:600px;max-height:92vh;overflow:auto;border:1px solid rgba(255,255,255,.08);}
+.form-header{padding:24px 24px 0;display:flex;justify-content:space-between;align-items:center;}
+.form-title{font-size:20px;font-weight:800;color:#fff;}
+.form-close{background:rgba(255,255,255,.08);border:none;color:#fff;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:16px;font-family:'DM Sans',sans-serif;}
+.form-body{padding:20px 24px 32px;}
+.flabel{font-size:11px;font-weight:700;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:6px;margin-top:16px;}
+.finput{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:11px 14px;font-size:14px;color:#fff;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s;}
+.finput:focus{border-color:rgba(245,196,0,.5);}
+.finput option{background:#1e293b;color:#fff;}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.stati{display:flex;gap:8px;margin-top:6px;}
+.stato-btn{flex:1;padding:9px 6px;border:1.5px solid rgba(255,255,255,.15);border-radius:10px;background:transparent;color:rgba(255,255,255,.4);font-size:11px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.btn-upload{width:100%;display:flex;flex-direction:column;align-items:center;gap:5px;padding:16px;border:1.5px dashed rgba(245,196,0,.3);border-radius:12px;cursor:pointer;background:rgba(245,196,0,.04);font-family:'DM Sans',sans-serif;transition:all .2s;margin-top:6px;}
+.btn-upload:hover{border-color:rgba(245,196,0,.6);background:rgba(245,196,0,.08);}
+.foto-preview-round{width:70px;height:70px;border-radius:50%;overflow:hidden;border:2px solid #f5c400;margin:8px auto 0;}
+.foto-preview-round img{width:100%;height:100%;object-fit:cover;}
+.gallery-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;}
+.gallery-item{position:relative;width:64px;height:64px;border-radius:8px;overflow:hidden;border:2px solid rgba(245,196,0,.4);}
+.gallery-item img{width:100%;height:100%;object-fit:cover;}
+.gallery-del{position:absolute;top:2px;right:2px;background:rgba(0,0,0,.7);color:#fff;border:none;border-radius:50%;width:16px;height:16px;font-size:9px;cursor:pointer;}
+.doc-item{display:flex;align-items:center;gap:8px;padding:8px 10px;background:rgba(255,255,255,.04);border-radius:10px;border:1px solid rgba(255,255,255,.08);margin-top:6px;}
+.doc-name{font-size:12px;color:rgba(255,255,255,.6);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.doc-del{background:none;border:none;color:#f87171;cursor:pointer;font-size:13px;}
+.ftextarea{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:11px 14px;font-size:14px;color:#fff;font-family:'DM Sans',sans-serif;outline:none;min-height:80px;resize:vertical;transition:border-color .2s;}
+.ftextarea:focus{border-color:rgba(245,196,0,.5);}
+.btn-save{width:100%;background:#f5c400;color:#0a0f1e;border:none;border-radius:12px;padding:15px;font-size:15px;font-weight:800;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:20px;transition:all .2s;}
+.btn-save:hover{background:#ffd700;}
+.btn-save:disabled{opacity:.4;cursor:not-allowed;}
+.save-ok{text-align:center;color:#4ade80;font-weight:700;margin-top:10px;font-size:14px;}
+.save-err{text-align:center;color:#f87171;font-weight:700;margin-top:10px;font-size:14px;}
+
+/* ACCEDI PANEL */
+.accedi-panel{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;}
+.accedi-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);}
+.accedi-box{position:relative;background:#0f172a;border-radius:24px;padding:40px;width:100%;max-width:380px;border:1px solid rgba(255,255,255,.1);text-align:center;}
+.accedi-icon{font-size:36px;margin-bottom:16px;}
+.accedi-title{font-size:24px;font-weight:800;color:#fff;margin-bottom:8px;}
+.accedi-sub{font-size:14px;color:rgba(255,255,255,.4);margin-bottom:24px;}
+.accedi-input{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:14px;font-size:16px;color:#fff;font-family:'DM Sans',sans-serif;outline:none;text-align:center;letter-spacing:3px;margin-bottom:12px;}
+.accedi-input:focus{border-color:rgba(245,196,0,.5);}
+.accedi-err{color:#f87171;font-size:13px;margin-bottom:10px;}
+.btn-login{width:100%;background:#f5c400;color:#0a0f1e;border:none;border-radius:12px;padding:14px;font-size:15px;font-weight:800;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.btn-cancel{width:100%;background:transparent;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.5);border-radius:12px;padding:12px;font-size:14px;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:8px;}
+
+/* LIGHTBOX */
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.95);display:flex;align-items:center;justify-content:center;z-index:300;}
+.lightbox img{max-width:95vw;max-height:90vh;border-radius:8px;object-fit:contain;}
+.lightbox-close{position:absolute;top:20px;right:24px;color:#fff;font-size:28px;cursor:pointer;background:none;border:none;font-family:'DM Sans',sans-serif;}
+
+.hidden{display:none!important;}
+@media(max-width:600px){
+  .header-center{display:none;}
+  .masonry-wrap{padding:16px;}
+  .header{padding:0 16px;}
+  .filtri-wrap{padding:0 16px;}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-inner">
+    <div class="header-left">
+      <div class="header-sub-row">
+        <div class="inside-label">INSIDE</div>
+        <div class="header-brand">SH<span class="o">◉</span>WROOM</div>
+        <div class="header-sub">CILA CIICAI &nbsp;·&nbsp; LE STANZE DA BAGNO</div>
+      </div>
+    </div>
+    <div class="header-center">
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input class="search-input" id="search" placeholder="Cerca per nome, nota, negozio..." oninput="renderCards()"/>
+      </div>
+    </div>
+    <div class="header-right">
+      <div id="authBadge" class="auth-badge hidden">
+        <span id="authLabel"></span>
+        <span class="auth-x" onclick="logout()">✕</span>
+      </div>
+      <button id="btnAccedi" class="btn-accedi" onclick="showAccedi()">Accedi</button>
+      <button id="btnAggiungi" class="btn-aggiungi hidden" onclick="showForm()">+ Aggiungi</button>
+    </div>
+  </div>
+</header>
+
+<!-- FILTRI CHIPS -->
+<div class="filtri-wrap">
+  <div class="filtri-inner">
+    <span class="filtri-label">Filtra</span>
+
+    <div id="chipsStato" style="display:flex;gap:6px;flex-wrap:wrap">
+      <button class="chip active" data-group="stato" data-val="Tutti" onclick="setChip(this,'stato')">Tutti</button>
+      <button class="chip" data-group="stato" data-val="Disponibile" onclick="setChip(this,'stato')">✅ Disponibile</button>
+      <button class="chip" data-group="stato" data-val="In trattativa" onclick="setChip(this,'stato')">🟡 In trattativa</button>
+      <button class="chip" data-group="stato" data-val="Venduto" onclick="setChip(this,'stato')">🔴 Venduto</button>
+    </div>
+
+    <div class="filtri-sep"></div>
+
+    <select id="filtroNegozio" class="filtri-select" onchange="renderCards()">
+        <option value="Tutti">🏪 Tutti i negozi</option>
+        <option value="SH1 - Bologna/Castenaso">SH1 - Bologna/Castenaso</option>
+        <option value="SH2 - Castel San Pietro Terme">SH2 - Castel San Pietro Terme</option>
+        <option value="SH3 - Imola Via Galeati">SH3 - Imola Via Galeati</option>
+        <option value="SH4 - Imola Via Ugo La Malfa">SH4 - Imola Via Ugo La Malfa</option>
+        <option value="SH5 - Faenza">SH5 - Faenza</option>
+        <option value="SH6 - Lugo">SH6 - Lugo</option>
+        <option value="SH7 - Ravenna">SH7 - Ravenna</option>
+        <option value="SH8 - Cervia">SH8 - Cervia</option>
+        <option value="SH9 - San Giuseppe">SH9 - San Giuseppe</option>
+        <option value="SH10 - Modena">SH10 - Modena</option>
+        <option value="SH11 - Sassuolo">SH11 - Sassuolo</option>
+      </select>
+
+      <select id="filtroStile" class="filtri-select" onchange="renderCards()">
+        <option value="Tutti">✦ Tutti gli stili</option>
+        <option value="Moderno">Moderno</option>
+        <option value="Classico">Classico</option>
+        <option value="Nordico">Nordico</option>
+        <option value="Minimalista">Minimalista</option>
+        <option value="Rustico">Rustico</option>
+        <option value="Altro">Altro</option>
+      </select>
+
+      <select id="filtroDim" class="filtri-select" onchange="renderCards()">
+        <option value="Tutti">📐 Tutte le dimensioni</option>
+        <option value="Fino a 80 cm">Fino a 80 cm</option>
+        <option value="80 – 120 cm">80 – 120 cm</option>
+        <option value="120 – 160 cm">120 – 160 cm</option>
+        <option value="Oltre 160 cm">Oltre 160 cm</option>
+      </select>
+
+    <span class="count-label" id="countLabel"></span>
+  </div>
+</div>
+
+<!-- GRID -->
+<div class="layout-wrap">
+  <div id="grid"><div class="loading">⏳ Caricamento in corso...</div></div>
+</div>
+
+<!-- MODAL DETTAGLIO -->
+<div class="overlay hidden" id="modal" onclick="closeModal()">
+  <div class="modal" onclick="event.stopPropagation()" style="position:relative">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modalHero"></div>
+    <div class="modal-body">
+      <div class="modal-nome" id="modalNome"></div>
+      <div class="modal-chips" id="modalChips"></div>
+      <div class="modal-note hidden" id="modalNote"></div>
+      <div id="modalGalleryWrap" class="hidden">
+        <div class="modal-section">📸 Altre foto</div>
+        <div class="modal-gallery" id="modalGallery"></div>
+      </div>
+      <div id="modalDocsWrap" class="hidden">
+        <div class="modal-section">📄 Documenti</div>
+        <div class="modal-docs" id="modalDocs"></div>
+      </div>
+      <div class="modal-actions hidden" id="modalActions">
+        <button type="button" class="btn-edit" onclick="editSelected()">✏️ Modifica</button>
+        <button type="button" class="btn-del" onclick="deleteSelected()">🗑️ Elimina</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FORM PANEL -->
+<div class="form-panel hidden" id="formPanel">
+  <div class="form-backdrop" onclick="hideForm()"></div>
+  <div class="form-sheet">
+    <div class="form-header">
+      <div class="form-title" id="formTitle">Nuovo box</div>
+      <button class="form-close" onclick="hideForm()">✕</button>
+    </div>
+    <div class="form-body">
+      <label class="flabel">Nome / descrizione *</label>
+      <input class="finput" id="fNome" placeholder="es. Bagno sospeso Heos con specchio rotondo"/>
+
+      <div class="frow" style="margin-top:16px">
+        <div>
+          <label class="flabel">Negozio</label>
+          <select class="finput" id="fNegozio">
+            <option>SH1 - Bologna/Castenaso</option><option>SH2 - Castel San Pietro Terme</option>
+            <option>SH3 - Imola Via Galeati</option><option>SH4 - Imola Via Ugo La Malfa</option>
+            <option>SH5 - Faenza</option><option>SH6 - Lugo</option><option>SH7 - Ravenna</option>
+            <option>SH8 - Cervia</option><option>SH9 - San Giuseppe</option>
+            <option>SH10 - Modena</option><option>SH11 - Sassuolo</option>
+          </select>
+        </div>
+        <div>
+          <label class="flabel">Stile</label>
+          <select class="finput" id="fStile">
+            <option>Moderno</option><option>Classico</option><option>Nordico</option>
+            <option>Minimalista</option><option>Rustico</option><option>Altro</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="frow">
+        <div>
+          <label class="flabel">Larghezza</label>
+          <select class="finput" id="fDim">
+            <option>Fino a 80 cm</option><option>80 – 120 cm</option>
+            <option>120 – 160 cm</option><option>Oltre 160 cm</option>
+          </select>
+        </div>
+        <div>
+          <label class="flabel">Stato</label>
+          <div class="stati">
+            <button type="button" class="stato-btn" id="s0" onclick="setStato('Disponibile')">Disp.</button>
+            <button type="button" class="stato-btn" id="s1" onclick="setStato('In trattativa')">Tratt.</button>
+            <button type="button" class="stato-btn" id="s2" onclick="setStato('Venduto')">Vend.</button>
+          </div>
+        </div>
+      </div>
+
+      <label class="flabel">📸 Foto principale</label>
+      <button type="button" class="btn-upload" onclick="uploadFoto('principale')">
+        <span style="font-size:22px">📁</span>
+        <span style="font-size:13px;font-weight:700;color:#f5c400">Carica foto principale</span>
+        <span style="font-size:11px;color:rgba(255,255,255,.3)">JPG, PNG, HEIC — max 5 MB</span>
+      </button>
+      <input class="finput" id="fFoto" placeholder="oppure incolla link diretto..." oninput="updatePreview()" style="margin-top:8px"/>
+      <div id="fotoPreview" class="foto-preview-round hidden"><img id="previewImg" src="" onerror="this.style.display='none'"/></div>
+
+      <label class="flabel">🖼️ Foto aggiuntive</label>
+      <button type="button" class="btn-upload" onclick="uploadFoto('gallery')">
+        <span style="font-size:20px">➕</span>
+        <span style="font-size:13px;font-weight:700;color:#f5c400">Aggiungi foto</span>
+      </button>
+      <div class="gallery-grid" id="galleryPreview"></div>
+
+      <label class="flabel">📄 Documenti / Schede tecniche</label>
+      <button type="button" class="btn-upload" onclick="uploadFoto('pdf')">
+        <span style="font-size:20px">📎</span>
+        <span style="font-size:13px;font-weight:700;color:#f5c400">Carica PDF</span>
+        <span style="font-size:11px;color:rgba(255,255,255,.3)">max 10 MB</span>
+      </button>
+      <input class="finput" id="fDocLink" placeholder="oppure link scheda tecnica online..." style="margin-top:8px"/>
+      <button type="button" style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.6);border-radius:10px;padding:9px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:6px" onclick="addDocLink()">+ Aggiungi link</button>
+      <div id="docList"></div>
+
+      <label class="flabel">Note libere</label>
+      <textarea class="ftextarea" id="fNote" placeholder="Caratteristiche, abbinamenti, note per i colleghi..."></textarea>
+
+      <div id="saveMsg" class="save-ok hidden">✅ Salvato con successo!</div>
+      <div id="saveErr" class="save-err hidden">❌ Errore. Riprova.</div>
+      <button type="button" class="btn-save" id="btnSubmit" onclick="submitBox()">Aggiungi al catalogo</button>
+    </div>
+  </div>
+</div>
+
+<!-- ACCEDI PANEL -->
+<div class="accedi-panel hidden" id="accediPanel">
+  <div class="accedi-backdrop" onclick="hideAccedi()"></div>
+  <div class="accedi-box">
+    <div class="accedi-icon">🔑</div>
+    <div class="accedi-title">Accedi</div>
+    <div class="accedi-sub">Inserisci il codice del tuo negozio o il codice admin</div>
+    <input class="accedi-input" id="codeInput" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')login()"/>
+    <div class="accedi-err hidden" id="authErr">Codice non valido. Riprova.</div>
+    <button type="button" class="btn-login" onclick="login()">Entra</button>
+    <button type="button" class="btn-cancel" onclick="hideAccedi()">Annulla</button>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox hidden" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightboxImg" src="" alt=""/>
+</div>
+
+<script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
+<script>
+var API='https://script.google.com/macros/s/AKfycbxJl4fUstYlN8kB_bwjLIONGfxMSntFFbEpvRkW-ynND7yVaMzCxOYCce5t8ov_bO0R/exec';
+var ADMIN_CODE='SARA2024';
+var NEGOZIO_CODES={'SH1 - Bologna/Castenaso':'SH1-2024','SH2 - Castel San Pietro Terme':'SH2-2024','SH3 - Imola Via Galeati':'SH3-2024','SH4 - Imola Via Ugo La Malfa':'SH4-2024','SH5 - Faenza':'SH5-2024','SH6 - Lugo':'SH6-2024','SH7 - Ravenna':'SH7-2024','SH8 - Cervia':'SH8-2024','SH9 - San Giuseppe':'SH9-2024','SH10 - Modena':'SH10-2024','SH11 - Sassuolo':'SH11-2024'};
+var boxes=[],authed=null,selectedBox=null,editId=null,formStato='Disponibile';
+var formGallery=[],formDocs=[];
+var filtroStato='Tutti';
+
+function apiGet(a){return fetch(API+'?action='+(a||'list')).then(function(r){return r.json();});}
+function apiCall(p){var qs=Object.keys(p).map(function(k){return k+'='+encodeURIComponent(typeof p[k]==='object'?JSON.stringify(p[k]):p[k]);}).join('&');return fetch(API+'?'+qs).then(function(r){return r.json();});}
+
+function cardHover(el, on) {
+  var img = el.querySelector('.card-img');
+  var overlay = el.querySelector('.card-overlay');
+  var info = el.querySelector('.card-info');
+  if (on) {
+    el.style.transform = 'translateY(-4px)';
+    el.style.boxShadow = '0 20px 60px rgba(0,0,0,.5)';
+    el.style.borderColor = 'rgba(245,196,0,.5)';
+    if (img) img.style.objectFit = 'contain';
+    if (overlay) overlay.style.opacity = '1';
+    if (info) { info.style.opacity = '1'; info.style.transform = 'translateY(0)'; }
+  } else {
+    el.style.transform = '';
+    el.style.boxShadow = '';
+    el.style.borderColor = '';
+    if (img) img.style.objectFit = 'cover';
+    if (overlay) overlay.style.opacity = '0';
+    if (info) { info.style.opacity = '0'; info.style.transform = 'translateY(8px)'; }
+  }
+}
+
+function fotoUrl(u){if(!u)return '';if(u.indexOf('cloudinary.com')!==-1)return u.replace('/upload/','/upload/f_jpg,q_auto/');return u;}
+function initials(n){return n.split(' ').slice(0,2).map(function(w){return w[0];}).join('').toUpperCase();}
+
+var SAMPLE_BOXES=[
+  {id:'s1',nome:'Bagno Sospeso Filo',negozio:'SH6 - Lugo',stile:'Moderno',stato:'Disponibile',dimensione:'80 – 120 cm',foto:'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=800&q=80',fotogallery:[],documenti:[],note:'Mobile sospeso con doppio lavabo, specchio retroilluminato incluso. Ottimo per bagni medio-grandi.'},
+  {id:'s2',nome:'Vasca Freestanding Ovale',negozio:'SH7 - Ravenna',stile:'Classico',stato:'Disponibile',dimensione:'Oltre 160 cm',foto:'https://images.unsplash.com/photo-1507652313519-d4e9174996dd?w=800&q=80',fotogallery:[],documenti:[],note:'Vasca centro stanza in acrilico bianco lucido, rubinetteria a colonna inclusa.'},
+  {id:'s3',nome:'Doccia Walk-in Nordica',negozio:'SH1 - Bologna/Castenaso',stile:'Nordico',stato:'In trattativa',dimensione:'120 – 160 cm',foto:'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&q=80',fotogallery:[],documenti:[],note:'Piatto doccia in resina antiscivolo effetto pietra, cristallo 8mm satinato.'},
+  {id:'s4',nome:'Bagno Viola Laccato',negozio:'SH3 - Imola Via Galeati',stile:'Moderno',stato:'Disponibile',dimensione:'120 – 160 cm',foto:'https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=800&q=80',fotogallery:[],documenti:[],note:'Mobile laccato viola opaco con top in Laminam, specchio tondo retroilluminato LED.'},
+  {id:'s5',nome:'Bagno Legno e Nero',negozio:'SH2 - Castel San Pietro Terme',stile:'Minimalista',stato:'Disponibile',dimensione:'80 – 120 cm',foto:'https://images.unsplash.com/photo-1620626011761-996317702782?w=800&q=80',fotogallery:[],documenti:[],note:'Composizione con mobile in rovere naturale e top nero opaco. Rubinetteria nera mat.'},
+  {id:'s6',nome:'Monolocale Bagno Completo',negozio:'SH5 - Faenza',stile:'Minimalista',stato:'Venduto',dimensione:'Fino a 80 cm',foto:'https://images.unsplash.com/photo-1629079447777-1e605162dc8d?w=800&q=80',fotogallery:[],documenti:[],note:'Soluzione completa per bagni piccoli: mobile 60cm, specchio contenitore, sanitari sospesi.'},
+  {id:'s7',nome:'Spa Privata con Vasca',negozio:'SH8 - Cervia',stile:'Classico',stato:'Disponibile',dimensione:'Oltre 160 cm',foto:'https://images.unsplash.com/photo-1563298723-dcfebaa392e3?w=800&q=80',fotogallery:[],documenti:[],note:'Vasca idromassaggio 170x80 con doppia doccia laterale e mobile doppio lavabo.'},
+  {id:'s8',nome:'Bagno Beige Naturale',negozio:'SH10 - Modena',stile:'Rustico',stato:'Disponibile',dimensione:'120 – 160 cm',foto:'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=800&q=80',fotogallery:[],documenti:[],note:'Mobile in frassino naturale con top in resina effetto pietra. Ambiente caldo e accogliente.'},
+  {id:'s9',nome:'Doccia Nera Industriale',negozio:'SH11 - Sassuolo',stile:'Moderno',stato:'In trattativa',dimensione:'80 – 120 cm',foto:'https://images.unsplash.com/photo-1540518614846-7eded433c457?w=800&q=80',fotogallery:[],documenti:[],note:'Box doccia con profili neri e cristallo trasparente 10mm. Piatto ultraslim.'},
+];
+
+function load(){
+  setStato('Disponibile');
+  apiGet('init').then(function(){return apiGet('list');}).then(function(d){
+    var live=Array.isArray(d)?d.map(function(b){b.id=String(b.id);return b;}).filter(function(b){return b.nome;}):[]; 
+    boxes=live.length>0?live:SAMPLE_BOXES;
+    renderCards();
+  }).catch(function(){
+    boxes=SAMPLE_BOXES;
+    renderCards();
+  });
+}
+
+function setChip(el,group){
+  document.querySelectorAll('[data-group="'+group+'"]').forEach(function(c){c.classList.remove('active');});
+  el.classList.add('active');
+  filtroStato=el.dataset.val;
+  renderCards();
+}
+
+function makeCard(b, size) {
+  var img = fotoUrl(b.foto);
+  var sc = b.stato==='Disponibile'?'disponibile':b.stato==='In trattativa'?'trattativa':'venduto';
+  var hasExtra = (b.fotogallery&&b.fotogallery.length)||(b.documenti&&b.documenti.length);
+  return '<div class="card '+size+'" onclick="openModal(\''+b.id+'\')" onmouseenter="cardHover(this,true)" onmouseleave="cardHover(this,false)">'+
+    '<span class="card-badge '+sc+'">'+b.stato+'</span>'+
+    (hasExtra?'<span class="card-attachments">📎</span>':'')+
+    (img
+      ?'<img class="card-img" src="'+img+'" onerror="this.style.display=\'none\'">'
+      :'<div class="card-placeholder"><span class="card-initials">'+initials(b.nome)+'</span></div>')+
+    '<div class="card-overlay"></div>'+
+    '<div class="card-info">'+
+      '<div class="card-nome">'+b.nome+'</div>'+
+      '<div class="card-negozio">🏪 '+b.negozio+'</div>'+
+      '<div class="card-tags">'+
+        (b.dimensione?'<span class="card-tag">📐 '+b.dimensione+'</span>':'')+
+        '<span class="card-tag">✦ '+b.stile+'</span>'+
+      '</div>'+
+    '</div>'+
+  '</div>';
+}
+
+function renderCards(){
+  var q=document.getElementById('search').value.toLowerCase();
+  var fn=document.getElementById('filtroNegozio').value;
+  var fs=document.getElementById('filtroStile').value;
+  var fd=document.getElementById('filtroDim').value;
+  var filtered=boxes.filter(function(b){
+    if(filtroStato!=='Tutti'&&b.stato!==filtroStato)return false;
+    if(fn!=='Tutti'&&b.negozio!==fn)return false;
+    if(fs!=='Tutti'&&b.stile!==fs)return false;
+    if(fd!=='Tutti'&&b.dimensione!==fd)return false;
+    if(q&&(b.nome+(b.note||'')+(b.negozio||'')).toLowerCase().indexOf(q)===-1)return false;
+    return true;
+  });
+  document.getElementById('countLabel').textContent=filtered.length+' box';
+  var grid=document.getElementById('grid');
+  if(!filtered.length){grid.innerHTML='<div class="empty">Nessun box trovato.</div>';return;}
+
+  var html='';
+  var i=0;
+  var rowNum=0;
+  while(i<filtered.length){
+    var bigLeft=(rowNum%2===0);
+    if(bigLeft){
+      // grande a sinistra, due piccole a destra
+      var big=filtered[i]||null;
+      var s1=filtered[i+1]||null;
+      var s2=filtered[i+2]||null;
+      if(big&&(s1||s2)){
+        html+='<div class="layout-row big-left">';
+        html+=makeCard(big,'big');
+        html+='<div class="small-col">';
+        if(s1) html+=makeCard(s1,'small');
+        if(s2) html+=makeCard(s2,'small');
+        html+='</div></div>';
+        i+=3;
+      } else {
+        // card singola o coppia finale
+        html+='<div class="layout-row big-left">';
+        html+=makeCard(big,'big');
+        if(s1) html+='<div class="small-col">'+makeCard(s1,'small')+'</div>';
+        html+='</div>';
+        i+=s1?2:1;
+      }
+    } else {
+      // due piccole a sinistra, grande a destra
+      var s1=filtered[i]||null;
+      var s2=filtered[i+1]||null;
+      var big=filtered[i+2]||null;
+      if(big){
+        html+='<div class="layout-row big-right">';
+        html+='<div class="small-col">';
+        if(s1) html+=makeCard(s1,'small');
+        if(s2) html+=makeCard(s2,'small');
+        html+='</div>';
+        html+=makeCard(big,'big');
+        html+='</div>';
+        i+=3;
+      } else {
+        html+='<div class="layout-row big-right">';
+        html+='<div class="small-col">';
+        if(s1) html+=makeCard(s1,'small');
+        if(s2) html+=makeCard(s2,'small');
+        html+='</div></div>';
+        i+=s2?2:1;
+      }
+    }
+    rowNum++;
+  }
+  grid.innerHTML=html;
+}
+
+function openModal(id){
+  selectedBox=null;
+  for(var i=0;i<boxes.length;i++){if(boxes[i].id===id){selectedBox=boxes[i];break;}}
+  if(!selectedBox)return;
+
+  // Costruisci array immagini carosello: foto principale + gallery
+  carouselImages=[];
+  if(selectedBox.foto) carouselImages.push(fotoUrl(selectedBox.foto));
+  var gallery=selectedBox.fotogallery||[];
+  gallery.forEach(function(u){if(u) carouselImages.push(fotoUrl(u));});
+
+  // Hero con carosello
+  var hero=document.getElementById('modalHero');
+  if(carouselImages.length>0){
+    var thumbsHtml=carouselImages.map(function(u,i){
+      return '<img class="modal-thumb'+(i===0?' active':'')+'" src="'+u+'" onclick="setCarouselImage('+i+')" onerror="this.style.display=\'none\'">';
+    }).join('');
+    hero.innerHTML=
+      '<div class="modal-hero-wrap">'+
+        '<img id="modalHeroImg" class="modal-hero-img" src="'+carouselImages[0]+'" onerror="this.style.display=\'none\'">'+
+        '<div id="modalHeroPlaceholder" class="modal-hero-placeholder" style="display:none">'+initials(selectedBox.nome)+'</div>'+
+        (carouselImages.length>1?'<button class="modal-nav prev" onclick="carouselPrev()">‹</button><button class="modal-nav next" onclick="carouselNext()">›</button>':'')+
+        (carouselImages.length>1?'<div class="modal-counter" id="modalCounter">1 / '+carouselImages.length+'</div>':'')+
+      '</div>'+
+      (carouselImages.length>1?'<div class="modal-thumbs">'+thumbsHtml+'</div>':'');
+  } else {
+    hero.innerHTML='<div class="modal-hero-wrap"><div class="modal-hero-placeholder">'+initials(selectedBox.nome)+'</div></div>';
+  }
+  carouselIndex=0;
+
+  document.getElementById('modalNome').textContent=selectedBox.nome;
+  var sc=selectedBox.stato==='Disponibile'?'disponibile':selectedBox.stato==='In trattativa'?'trattativa':'venduto';
+  document.getElementById('modalChips').innerHTML=
+    '<span class="modal-chip giallo">🏪 '+selectedBox.negozio+'</span>'+
+    (selectedBox.dimensione?'<span class="modal-chip">📐 '+selectedBox.dimensione+'</span>':'')+
+    '<span class="modal-chip viola">✦ '+selectedBox.stile+'</span>'+
+    '<span class="modal-chip">'+selectedBox.stato+'</span>';
+  var noteEl=document.getElementById('modalNote');
+  if(selectedBox.note){noteEl.textContent=selectedBox.note;noteEl.classList.remove('hidden');}else noteEl.classList.add('hidden');
+
+  // Nascondi sezione gallery vecchia (ora nel carosello)
+  document.getElementById('modalGalleryWrap').classList.add('hidden');
+
+  // Documenti
+  var docs=selectedBox.documenti||[];
+  var dWrap=document.getElementById('modalDocsWrap');
+  if(docs.length){
+    document.getElementById('modalDocs').innerHTML=docs.map(function(d){
+      var nome=typeof d==='string'?d.split('/').pop():(d.nome||d.url.split('/').pop());
+      var url=typeof d==='string'?d:d.url;
+      return '<a class="modal-doc" href="'+url+'" target="_blank"><span class="modal-doc-icon">📄</span><span class="modal-doc-name">'+nome+'</span><span class="modal-doc-arrow">↗</span></a>';
+    }).join('');
+    dWrap.classList.remove('hidden');
+  }else dWrap.classList.add('hidden');
+
+  var canEdit=authed==='admin'||authed===selectedBox.negozio;
+  document.getElementById('modalActions').classList.toggle('hidden',!canEdit);
+  document.getElementById('modal').classList.remove('hidden');
+}
+
+function closeModal(){document.getElementById('modal').classList.add('hidden');selectedBox=null;}
+function openLightbox(u){document.getElementById('lightboxImg').src=u;document.getElementById('lightbox').classList.remove('hidden');}
+function closeLightbox(){document.getElementById('lightbox').classList.add('hidden');}
+
+function editSelected(){
+  if(!selectedBox)return;
+  editId=selectedBox.id;
+  document.getElementById('fNome').value=selectedBox.nome;
+  document.getElementById('fNegozio').value=selectedBox.negozio;
+  document.getElementById('fStile').value=selectedBox.stile;
+  document.getElementById('fDim').value=selectedBox.dimensione||'Fino a 80 cm';
+  document.getElementById('fFoto').value=selectedBox.foto||'';
+  document.getElementById('fNote').value=selectedBox.note||'';
+  formGallery=selectedBox.fotogallery?selectedBox.fotogallery.slice():[];
+  formDocs=selectedBox.documenti?selectedBox.documenti.slice():[];
+  setStato(selectedBox.stato);updatePreview();renderGalleryPreview();renderDocList();
+  document.getElementById('formTitle').textContent='Modifica box';
+  closeModal();showForm();
+}
+
+function deleteSelected(){
+  if(!selectedBox||!confirm('Eliminare questo box?'))return;
+  var id=selectedBox.id;closeModal();
+  apiCall({action:'delete',id:id}).then(function(){return apiGet('list');})
+    .then(function(d){boxes=Array.isArray(d)?d.map(function(b){b.id=String(b.id);return b;}):[]; renderCards();});
+}
+
+function setStato(s){
+  formStato=s;
+  var map={'Disponibile':{id:'s0',col:'#4ade80',bg:'rgba(34,197,94,.15)'},'In trattativa':{id:'s1',col:'#f5c400',bg:'rgba(245,196,0,.15)'},'Venduto':{id:'s2',col:'#f87171',bg:'rgba(239,68,68,.15)'}};
+  ['Disponibile','In trattativa','Venduto'].forEach(function(st){
+    var el=document.getElementById(map[st].id);if(!el)return;
+    if(st===s){el.style.borderColor=map[st].col;el.style.color=map[st].col;el.style.background=map[st].bg;}
+    else{el.style.borderColor='rgba(255,255,255,.15)';el.style.color='rgba(255,255,255,.4)';el.style.background='transparent';}
+  });
+}
+
+function updatePreview(){
+  var u=document.getElementById('fFoto').value;
+  var p=document.getElementById('fotoPreview');
+  var i=document.getElementById('previewImg');
+  if(u){i.src=fotoUrl(u);p.classList.remove('hidden');}else p.classList.add('hidden');
+}
+
+function renderGalleryPreview(){
+  document.getElementById('galleryPreview').innerHTML=formGallery.map(function(u,i){
+    return '<div class="gallery-item"><img src="'+fotoUrl(u)+'" onerror="this.style.display=\'none\'"><button class="gallery-del" onclick="removeGallery('+i+')">✕</button></div>';
+  }).join('');
+}
+function removeGallery(i){formGallery.splice(i,1);renderGalleryPreview();}
+
+function renderDocList(){
+  document.getElementById('docList').innerHTML=formDocs.map(function(d,i){
+    var nome=typeof d==='string'?d.split('/').pop():(d.nome||d.url.split('/').pop());
+    return '<div class="doc-item"><span style="font-size:16px">📄</span><span class="doc-name">'+nome+'</span><button class="doc-del" onclick="removeDoc('+i+')">✕</button></div>';
+  }).join('');
+}
+function removeDoc(i){formDocs.splice(i,1);renderDocList();}
+
+function addDocLink(){
+  var u=document.getElementById('fDocLink').value.trim();
+  if(!u)return;
+  formDocs.push({url:u,nome:u.split('/').pop()});
+  document.getElementById('fDocLink').value='';
+  renderDocList();
+}
+
+function uploadFoto(tipo){
+  if(!window.cloudinary){alert('Widget non ancora caricato, riprova.');return;}
+  var opts={cloudName:'dow0trtsi',uploadPreset:'expo_vetrina',sources:['local','camera']};
+  if(tipo==='pdf'){opts.resourceType='auto';opts.clientAllowedFormats=['pdf'];opts.maxFileSize=20000000;}
+  else{opts.clientAllowedFormats=['jpg','jpeg','png','heic','webp'];opts.maxFileSize=5000000;}
+  window.cloudinary.createUploadWidget(opts,function(err,result){
+    if(err){alert('Errore caricamento.');return;}
+    if(result.event==='success'){
+      var url=result.info.secure_url;
+      var nome=result.info.original_filename||url.split('/').pop();
+      if(tipo==='principale'){document.getElementById('fFoto').value=url;updatePreview();}
+      else if(tipo==='gallery'){formGallery.push(url);renderGalleryPreview();}
+      else if(tipo==='pdf'){formDocs.push({url:url,nome:nome});renderDocList();}
+    }
+  }).open();
+}
+
+function submitBox(){
+  var nome=document.getElementById('fNome').value.trim();
+  if(!nome)return;
+  var btn=document.getElementById('btnSubmit');
+  btn.disabled=true;btn.textContent='Salvataggio...';
+  var box={id:editId!==null?editId:Date.now(),nome:nome,negozio:document.getElementById('fNegozio').value,stile:document.getElementById('fStile').value,stato:formStato,dimensione:document.getElementById('fDim').value,foto:document.getElementById('fFoto').value,fotogallery:formGallery,documenti:formDocs,note:document.getElementById('fNote').value};
+  apiCall({action:editId!==null?'update':'add',box:box}).then(function(){return apiGet('list');})
+  .then(function(d){
+    boxes=Array.isArray(d)?d.map(function(b){b.id=String(b.id);return b;}):[]; 
+    document.getElementById('fNome').value='';document.getElementById('fFoto').value='';document.getElementById('fNote').value='';document.getElementById('fDocLink').value='';
+    document.getElementById('fotoPreview').classList.add('hidden');
+    document.getElementById('galleryPreview').innerHTML='';document.getElementById('docList').innerHTML='';
+    formGallery=[];formDocs=[];
+    document.getElementById('formTitle').textContent='Nuovo box';
+    document.getElementById('saveMsg').classList.remove('hidden');
+    setTimeout(function(){document.getElementById('saveMsg').classList.add('hidden');},2000);
+    btn.disabled=false;btn.textContent='Aggiungi al catalogo';
+    editId=null;setStato('Disponibile');
+    renderCards();hideForm();
+  }).catch(function(){
+    document.getElementById('saveErr').classList.remove('hidden');
+    setTimeout(function(){document.getElementById('saveErr').classList.add('hidden');},3000);
+    btn.disabled=false;btn.textContent='Aggiungi al catalogo';
+  });
+}
+
+function showForm(){document.getElementById('formPanel').classList.remove('hidden');}
+function hideForm(){document.getElementById('formPanel').classList.add('hidden');}
+function showAccedi(){document.getElementById('accediPanel').classList.remove('hidden');}
+function hideAccedi(){document.getElementById('accediPanel').classList.add('hidden');}
+
+function login(){
+  var code=document.getElementById('codeInput').value;
+  if(code===ADMIN_CODE){authed='admin';setAuthed();return;}
+  var neg=null;Object.keys(NEGOZIO_CODES).forEach(function(k){if(NEGOZIO_CODES[k]===code)neg=k;});
+  if(neg){authed=neg;setAuthed();return;}
+  document.getElementById('authErr').classList.remove('hidden');
+}
+
+function setAuthed(){
+  document.getElementById('authErr').classList.add('hidden');
+  document.getElementById('codeInput').value='';
+  document.getElementById('authLabel').textContent=authed==='admin'?'👑 Admin':authed;
+  document.getElementById('authBadge').classList.remove('hidden');
+  document.getElementById('btnAccedi').classList.add('hidden');
+  document.getElementById('btnAggiungi').classList.remove('hidden');
+  if(authed!=='admin'){document.getElementById('fNegozio').value=authed;document.getElementById('fNegozio').disabled=true;}
+  hideAccedi();
+}
+
+function logout(){
+  authed=null;
+  document.getElementById('authBadge').classList.add('hidden');
+  document.getElementById('btnAccedi').classList.remove('hidden');
+  document.getElementById('btnAggiungi').classList.add('hidden');
+  document.getElementById('fNegozio').disabled=false;
+}
+
+load();
+</script>
+</body>
+</html>
