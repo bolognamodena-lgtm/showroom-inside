@@ -420,6 +420,12 @@ function aggiornaMarcheFilter(){
   sel.value=marche.indexOf(current)!==-1?current:'Tutti';
 }
 
+function shuffle(arr){
+  var a=arr.slice();
+  for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}
+  return a;
+}
+
 function renderCards(){
   var q=document.getElementById('search').value.toLowerCase();
   var fn=document.getElementById('filtroNegozio').value;
@@ -427,7 +433,7 @@ function renderCards(){
   var fd=document.getElementById('filtroDim').value;
   var fm=document.getElementById('filtroMarca').value;
   aggiornaMarcheFilter();
-  var filtered=boxes.filter(function(b){
+  var filtered=shuffle(boxes.filter(function(b){
     if(filtroStato!=='Tutti'&&b.stato!==filtroStato)return false;
     if(fn!=='Tutti'&&b.negozio!==fn)return false;
     if(fs!=='Tutti'&&b.stile!==fs)return false;
@@ -435,18 +441,35 @@ function renderCards(){
     if(fm!=='Tutti'&&(b.marca||'').trim()!==fm)return false;
     if(q&&(b.nome+(b.note||'')+(b.negozio||'')+(b.marca||'')).toLowerCase().indexOf(q)===-1)return false;
     return true;
-  });
+  }));
   document.getElementById('countLabel').textContent=filtered.length+' box';
   var grid=document.getElementById('grid');
   if(!filtered.length){grid.innerHTML='<div class="empty">Nessun box trovato.</div>';return;}
-  var html='',i=0,rowNum=0;
+
+  var html='',i=0,phase=0;
+  // pattern: 0=diag, 1=diag-rev, 2=full — poi ricomincia
   while(i<filtered.length){
-    var count=Math.min(3,filtered.length-i);
-    var diagClass=rowNum%2===0?'diag':'diag-rev';
-    html+='<div class="diagonal-row">';
-    for(var j=0;j<count;j++) html+=makeCard(filtered[i+j],diagClass);
-    html+='</div>';
-    i+=count;rowNum++;
+    if(phase===0){
+      // riga zigzag sinistra
+      var count=Math.min(3,filtered.length-i);
+      html+='<div class="diagonal-row">';
+      for(var j=0;j<count;j++) html+=makeCard(filtered[i+j],'diag');
+      html+='</div>';
+      i+=count;phase=1;
+    } else if(phase===1){
+      // riga zigzag destra
+      var count=Math.min(3,filtered.length-i);
+      html+='<div class="diagonal-row">';
+      for(var j=0;j<count;j++) html+=makeCard(filtered[i+j],'diag-rev');
+      html+='</div>';
+      i+=count;phase=2;
+    } else {
+      // riga full orizzontale
+      html+='<div class="full-row">';
+      html+=makeCard(filtered[i],'');
+      html+='</div>';
+      i+=1;phase=0;
+    }
   }
   grid.innerHTML=html;
 }
