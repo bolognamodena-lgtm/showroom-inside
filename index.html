@@ -10,21 +10,18 @@
 body{font-family:'DM Sans',sans-serif;background:#0a0f1e;min-height:100vh;color:#fff;}
 .header{position:sticky;top:0;z-index:50;background:rgba(10,15,30,.92);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.08);padding:0 32px;}
 .header-inner{max-width:1400px;margin:0 auto;min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:8px 0;flex-wrap:nowrap;}
-.header-left{display:flex;flex-direction:column;gap:0;flex-shrink:0;}
-.header-center{flex:1;max-width:520px;margin:0 24px;min-width:0;}
-.header-right{display:flex;align-items:center;gap:12px;flex-shrink:0;}
-.header-left{display:flex;flex-direction:column;gap:1px;}
+.header-left{display:flex;flex-direction:column;gap:0;flex-shrink:0;margin-right:auto;}
+.header-center{flex:0 0 auto;width:220px;margin:0 0 0 16px;min-width:0;}
+.header-right{display:flex;align-items:center;gap:12px;flex-shrink:0;margin-left:12px;}
 .inside-label{font-size:13px;font-weight:800;letter-spacing:5px;color:#f5c400;text-transform:uppercase;}
 .header-brand{font-size:18px;font-weight:900;letter-spacing:3px;color:#fff;text-transform:uppercase;line-height:1;}
 .header-brand .o{color:#f5c400;font-size:22px;}
 .header-sub{font-size:9px;letter-spacing:3px;color:rgba(255,255,255,.4);text-transform:uppercase;font-weight:400;}
-.header-center{flex:1;max-width:520px;margin:0 24px;}
 .search-wrap{position:relative;}
 .search-input{width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:50px;padding:10px 20px 10px 44px;font-size:14px;color:#fff;font-family:'DM Sans',sans-serif;outline:none;transition:all .2s;}
 .search-input::placeholder{color:rgba(255,255,255,.35);}
 .search-input:focus{background:rgba(255,255,255,.1);border-color:rgba(245,196,0,.4);}
 .search-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,.35);font-size:15px;}
-.header-right{display:flex;align-items:center;gap:12px;}
 .btn-accedi{background:transparent;border:1.5px solid #f5c400;color:#f5c400;padding:8px 20px;border-radius:50px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;white-space:nowrap;}
 .btn-accedi:hover{background:#f5c400;color:#0a0f1e;}
 .auth-badge{display:flex;align-items:center;gap:8px;background:rgba(245,196,0,.12);border:1px solid rgba(245,196,0,.3);border-radius:50px;padding:7px 16px;font-size:13px;color:#f5c400;font-weight:600;}
@@ -42,8 +39,6 @@ body{font-family:'DM Sans',sans-serif;background:#0a0f1e;min-height:100vh;color:
 .filtri-select option{background:#1e2940;color:#fff;}
 .count-label{font-size:12px;color:rgba(255,255,255,.3);margin-left:auto;font-weight:400;}
 .layout-wrap{max-width:1400px;margin:0 auto;padding:24px 32px;}
-.diagonal-row{display:flex;height:420px;margin-bottom:16px;position:relative;}
-.diagonal-row.small-row{height:260px;}
 .card{position:relative;cursor:pointer;overflow:hidden;background:#0a1f4d;flex-shrink:0;}
 .card.diag{clip-path:polygon(0 0, 88% 0, 100% 100%, 0% 100%);margin-right:-60px;}
 .card.diag:last-child{clip-path:none;margin-right:0;}
@@ -70,7 +65,6 @@ body{font-family:'DM Sans',sans-serif;background:#0a0f1e;min-height:100vh;color:
 .empty{text-align:center;padding:80px;color:rgba(255,255,255,.3);font-size:16px;}
 .loading{text-align:center;padding:80px;color:rgba(255,255,255,.3);font-size:14px;}
 @media(max-width:768px){
-  .diagonal-row{flex-direction:column;height:auto;}
   .card.diag,.card.diag-rev{clip-path:none;margin-right:0;margin-bottom:8px;height:220px;}
 }
 
@@ -78,8 +72,6 @@ body{font-family:'DM Sans',sans-serif;background:#0a0f1e;min-height:100vh;color:
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:flex-end;justify-content:center;z-index:100;backdrop-filter:blur(8px);}
 .modal{background:#0f172a;border-radius:24px 24px 0 0;width:100%;max-width:680px;max-height:92vh;overflow:auto;border:1px solid rgba(255,255,255,.08);}
 .modal-close{position:absolute;top:14px;right:16px;background:rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.15);color:#fff;border-radius:50%;width:34px;height:34px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;z-index:10;font-family:'DM Sans',sans-serif;}
-
-/* CAROSELLO */
 .carousel-wrap{position:relative;width:100%;height:300px;background:#060d1f;border-radius:24px 24px 0 0;overflow:hidden;}
 .carousel-img{width:100%;height:100%;object-fit:contain;display:block;}
 .carousel-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:64px;font-weight:900;color:rgba(255,255,255,.1);}
@@ -92,7 +84,6 @@ body{font-family:'DM Sans',sans-serif;background:#0a0f1e;min-height:100vh;color:
 .carousel-thumb{width:58px;height:58px;border-radius:8px;object-fit:cover;cursor:pointer;border:2px solid rgba(255,255,255,.1);flex-shrink:0;transition:all .2s;}
 .carousel-thumb.active{border-color:#f5c400;transform:scale(1.07);}
 .carousel-thumb:hover{border-color:rgba(245,196,0,.5);}
-
 .modal-body{padding:24px;position:relative;}
 .modal-nome{font-size:24px;font-weight:800;color:#fff;margin-bottom:12px;}
 .modal-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px;}
@@ -157,11 +148,32 @@ body{font-family:'DM Sans',sans-serif;background:#0a0f1e;min-height:100vh;color:
 .accedi-err{color:#f87171;font-size:13px;margin-bottom:10px;}
 .btn-login{width:100%;background:#f5c400;color:#0a0f1e;border:none;border-radius:12px;padding:14px;font-size:15px;font-weight:800;cursor:pointer;font-family:'DM Sans',sans-serif;}
 .btn-cancel{width:100%;background:transparent;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.5);border-radius:12px;padding:12px;font-size:14px;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:8px;}
-.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.95);display:flex;align-items:center;justify-content:center;z-index:300;}
-.lightbox img{max-width:95vw;max-height:90vh;border-radius:8px;object-fit:contain;}
-.lightbox-close{position:absolute;top:20px;right:24px;color:#fff;font-size:28px;cursor:pointer;background:none;border:none;font-family:'DM Sans',sans-serif;}
 .hidden{display:none!important;}
 @media(max-width:600px){.header-center{display:none;}.header{padding:0 16px;}.filtri-wrap{padding:0 16px;}}
+
+/* HELP BUTTON */
+.help-btn{position:fixed;bottom:28px;right:28px;z-index:150;width:48px;height:48px;border-radius:50%;background:#f5c400;border:none;color:#0a0f1e;font-size:20px;font-weight:900;cursor:pointer;font-family:'DM Sans',sans-serif;box-shadow:0 4px 20px rgba(245,196,0,.4);transition:all .2s;display:flex;align-items:center;justify-content:center;}
+.help-btn:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(245,196,0,.55);}
+
+/* HELP PANEL */
+.help-panel{position:fixed;bottom:90px;right:28px;z-index:150;width:340px;max-height:520px;background:#0f172a;border-radius:20px;border:1px solid rgba(255,255,255,.1);overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.6);display:flex;flex-direction:column;}
+.help-header{padding:18px 20px 0;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;}
+.help-title{font-size:15px;font-weight:800;color:#fff;}
+.help-close{background:rgba(255,255,255,.08);border:none;color:#fff;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:14px;font-family:'DM Sans',sans-serif;display:flex;align-items:center;justify-content:center;}
+.help-tabs{display:flex;gap:6px;padding:14px 20px 0;flex-shrink:0;}
+.help-tab{flex:1;padding:7px 4px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:transparent;color:rgba(255,255,255,.4);font-size:11px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;text-align:center;}
+.help-tab.active{background:#f5c400;border-color:#f5c400;color:#0a0f1e;}
+.help-content{flex:1;overflow-y:auto;padding:16px 20px 20px;}
+.help-step{display:flex;gap:12px;margin-bottom:14px;align-items:flex-start;}
+.help-step-num{width:24px;height:24px;border-radius:50%;background:rgba(245,196,0,.15);border:1px solid rgba(245,196,0,.4);color:#f5c400;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.help-step-text{font-size:13px;color:rgba(255,255,255,.75);line-height:1.55;}
+.help-step-text strong{color:#fff;font-weight:700;}
+.help-tip{background:rgba(245,196,0,.07);border:1px solid rgba(245,196,0,.2);border-radius:10px;padding:10px 12px;font-size:12px;color:rgba(255,255,255,.55);line-height:1.5;margin-top:4px;}
+.help-tip strong{color:#f5c400;}
+@media(max-width:600px){
+  .help-panel{width:calc(100vw - 32px);right:16px;bottom:80px;}
+  .help-btn{bottom:20px;right:16px;}
+}
 </style>
 </head>
 <body>
@@ -174,7 +186,6 @@ body{font-family:'DM Sans',sans-serif;background:#0a0f1e;min-height:100vh;color:
         <img src="https://res.cloudinary.com/dop9lxwqy/image/upload/v1778919961/Progetto_senza_titolo_omt6x4.png" alt="Showroom CILA CIICAI" style="height:48px;width:auto;display:block;position:relative;z-index:1;"/>
         <div style="position:absolute;bottom:0;left:-100vw;right:-4px;height:28%;background:#f5c400;z-index:0;"></div>
       </div>
-    </div>
     </div>
     <div class="header-center">
       <div class="search-wrap">
@@ -305,7 +316,6 @@ body{font-family:'DM Sans',sans-serif;background:#0a0f1e;min-height:100vh;color:
       </div>
       <label class="flabel">🏷️ Marca / Fornitore</label>
       <input class="finput" id="fMarca" placeholder="es. Geberit, Ideal Standard, Duravit..."/>
-
       <button type="button" class="btn-upload" onclick="uploadFoto('principale')">
         <span style="font-size:22px">📁</span>
         <span style="font-size:13px;font-weight:700;color:#f5c400">Carica foto principale</span>
@@ -354,15 +364,95 @@ body{font-family:'DM Sans',sans-serif;background:#0a0f1e;min-height:100vh;color:
   </div>
 </div>
 
+<!-- LIGHTBOX -->
 <div id="lightbox" class="hidden" style="position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:300;display:flex;flex-direction:column;align-items:center;justify-content:center;">
   <button onclick="closeLightbox()" style="position:absolute;top:16px;right:20px;background:none;border:none;color:#fff;font-size:32px;cursor:pointer;z-index:10;">✕</button>
   <div id="lightboxTrack" style="display:flex;align-items:center;justify-content:center;width:100%;height:82vh;position:relative;overflow:hidden;"></div>
   <div id="lightboxCounter" style="margin-top:12px;background:rgba(0,0,0,.5);border-radius:20px;padding:4px 14px;font-size:13px;color:rgba(255,255,255,.7);"></div>
 </div>
 
+<!-- HELP BUTTON -->
+<button class="help-btn" id="helpBtn" onclick="toggleHelp()" title="Guida rapida">?</button>
+
+<!-- HELP PANEL -->
+<div class="help-panel hidden" id="helpPanel">
+  <div class="help-header">
+    <span class="help-title">Guida rapida</span>
+    <button class="help-close" onclick="toggleHelp()">✕</button>
+  </div>
+  <div class="help-tabs">
+    <button class="help-tab active" onclick="switchHelpTab(this,'cerca')">🔍 Cerca</button>
+    <button class="help-tab" onclick="switchHelpTab(this,'aggiungi')">➕ Aggiungi</button>
+    <button class="help-tab" onclick="switchHelpTab(this,'foto')">📸 Foto & Doc</button>
+  </div>
+  <div class="help-content">
+
+    <div id="help-cerca">
+      <div class="help-step">
+        <div class="help-step-num">1</div>
+        <div class="help-step-text">Usa la <strong>barra di ricerca</strong> in alto per trovare un box per nome, nota o negozio. La ricerca è immediata, non serve premere invio.</div>
+      </div>
+      <div class="help-step">
+        <div class="help-step-num">2</div>
+        <div class="help-step-text">Filtra per <strong>stato</strong> (Disponibile, In trattativa, Venduto…) cliccando i bottoni colorati sotto la barra.</div>
+      </div>
+      <div class="help-step">
+        <div class="help-step-num">3</div>
+        <div class="help-step-text">Usa i menu a tendina per filtrare per <strong>negozio, stile, larghezza</strong> o <strong>fornitore</strong>. I filtri si combinano tra loro.</div>
+      </div>
+      <div class="help-step">
+        <div class="help-step-num">4</div>
+        <div class="help-step-text"><strong>Clicca su un box</strong> per aprire il dettaglio: galleria foto, documenti PDF, note e stato.</div>
+      </div>
+      <div class="help-tip">💡 Il <strong>contatore in alto a destra</strong> mostra quanti box corrispondono ai filtri attivi.</div>
+    </div>
+
+    <div id="help-aggiungi" class="hidden">
+      <div class="help-step">
+        <div class="help-step-num">1</div>
+        <div class="help-step-text"><strong>Accedi</strong> con il codice fornito dalla direzione. Il pulsante "Accedi" è in alto a destra.</div>
+      </div>
+      <div class="help-step">
+        <div class="help-step-num">2</div>
+        <div class="help-step-text">Clicca <strong>+ Aggiungi</strong> (appare dopo l'accesso). Compila nome, negozio, stile e larghezza. Il nome è l'unico campo obbligatorio. Nelle note libere lascia ai colleghi più informazioni utili possibili: dimensioni reali, colori, finiture, abbinamenti. <strong>Non inserire mai i costi delle composizioni.</strong></div>
+      </div>
+      <div class="help-step">
+        <div class="help-step-num">3</div>
+        <div class="help-step-text">Scegli lo <strong>stato</strong>: Disponibile (verde) · In trattativa (giallo) · Da confermare disponibilità (viola) · Venduto (rosso).</div>
+      </div>
+      <div class="help-step">
+        <div class="help-step-num">4</div>
+        <div class="help-step-text">Per <strong>modificare</strong> un box già inserito: aprilo e clicca ✏️ Modifica. Modifica solo le schede che hai creato tu.</div>
+      </div>
+      <div class="help-tip">💡 Le <strong>note libere</strong> sono utili per indicare abbinamenti, dimensioni reali o osservazioni per i colleghi.</div>
+    </div>
+
+    <div id="help-foto" class="hidden">
+      <div class="help-step">
+        <div class="help-step-num">1</div>
+        <div class="help-step-text">Clicca <strong>"Carica foto principale"</strong> per scattare o scegliere un'immagine dal tuo dispositivo. Formati accettati: JPG, PNG, HEIC. Max 5 MB.</div>
+      </div>
+      <div class="help-step">
+        <div class="help-step-num">2</div>
+        <div class="help-step-text">Aggiungi fino a più <strong>foto aggiuntive</strong> (galleria) con il pulsante ➕. Saranno sfogliabili nel dettaglio del box.</div>
+      </div>
+      <div class="help-step">
+        <div class="help-step-num">3</div>
+        <div class="help-step-text">Per le <strong>schede tecniche</strong>: preferisci incollare il link dal sito del fornitore. In alternativa carica il PDF direttamente (max 20 MB).</div>
+      </div>
+      <div class="help-step">
+        <div class="help-step-num">4</div>
+        <div class="help-step-text">Puoi aggiungere <strong>più documenti</strong> allo stesso box — ogni link o PDF appare nell'elenco. Rimuovili con ✕ prima di salvare.</div>
+      </div>
+      <div class="help-tip">💡 Le foto vengono caricate su <strong>Cloudinary</strong> e restano disponibili anche se il sito viene aggiornato.</div>
+    </div>
+
+  </div>
+</div>
+
 <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
 <script>
-var API='https://script.google.com/macros/s/AKfycbzumJ40JViBEgHk4bWfW-jpCiC-I7wMkajN0Qj0OiY7ydbf-FdwkcBeVrNkiQvlFZqr/exec';
+var API='https://script.google.com/macros/s/AKfycbycymaoVrqwWwHATWJf-Sgrv9Y920-S_HbnHZef0cEckVDtgin-d-8Ptla_s6-MmSv-/exec';
 var ADMIN_CODE='CilaCiicai26';
 var NEGOZIO_CODES={'SH1 - Bologna/Castenaso':'SH1-2024','SH2 - Castel San Pietro Terme':'SH2-2024','SH3 - Imola Via Galeati':'SH3-2024','SH4 - Imola Via Ugo La Malfa':'SH4-2024','SH5 - Faenza':'SH5-2024','SH6 - Lugo':'SH6-2024','SH7 - Ravenna':'SH7-2024','SH8 - Cervia':'SH8-2024','SH9 - San Giuseppe':'SH9-2024','SH10 - Modena':'SH10-2024','SH11 - Sassuolo':'SH11-2024'};
 var boxes=[],authed=null,selectedBox=null,editId=null,formStato='Disponibile';
@@ -450,7 +540,6 @@ function renderCards(){
   var html='',i=0,phase=0;
 
   if(isMobile){
-    // Mobile: 1 card per riga, tutte uguali
     while(i<filtered.length){
       html+='<div style="width:100%;height:260px;margin-bottom:10px;position:relative;overflow:hidden;border-radius:12px;">';
       html+=makeCard(filtered[i],'');
@@ -458,7 +547,6 @@ function renderCards(){
       i++;
     }
   } else {
-    // Desktop: pattern zigzag + full
     while(i<filtered.length){
       if(phase===0){
         var count=Math.min(3,filtered.length-i);
@@ -483,7 +571,6 @@ function renderCards(){
   grid.innerHTML=html;
 }
 
-// CAROSELLO
 function carouselGo(idx){
   carouselIdx=idx;
   var img=document.getElementById('carImg');
@@ -499,13 +586,10 @@ function openModal(id){
   selectedBox=null;
   for(var i=0;i<boxes.length;i++){if(boxes[i].id===id){selectedBox=boxes[i];break;}}
   if(!selectedBox)return;
-
-  // Costruisci carosello
   carouselImgs=[];
   if(selectedBox.foto) carouselImgs.push(fotoUrl(selectedBox.foto));
   (selectedBox.fotogallery||[]).forEach(function(u){if(u)carouselImgs.push(fotoUrl(u));});
   carouselIdx=0;
-
   var car=document.getElementById('modalCarousel');
   if(carouselImgs.length>0){
     var thumbsHtml=carouselImgs.length>1?'<div class="carousel-thumbs">'+carouselImgs.map(function(u,i){return '<img class="carousel-thumb'+(i===0?' active':'')+'" src="'+u+'" onclick="carouselGo('+i+')" onerror="this.style.display=\'none\'">';}).join('')+'</div>':'';
@@ -518,7 +602,6 @@ function openModal(id){
   } else {
     car.innerHTML='<div class="carousel-wrap"><div class="carousel-placeholder">'+initials(selectedBox.nome)+'</div></div>';
   }
-
   document.getElementById('modalNome').textContent=selectedBox.nome;
   document.getElementById('modalChips').innerHTML=
     '<span class="modal-chip giallo">🏪 '+selectedBox.negozio+'</span>'+
@@ -566,15 +649,8 @@ function updateLightbox(){
   var html='';
   for(var i=0;i<n;i++){
     var diff=i-lightboxIdx;
-    var translateX=diff*105; // 105% = immagine intera + piccolo gap
-    html+='<img src="'+carouselImgs[i]+'" onclick="lightboxGo('+i+')" style="'+
-      'position:absolute;'+
-      'height:78vh;width:auto;max-width:80vw;'+
-      'object-fit:contain;border-radius:12px;'+
-      'transform:translateX('+translateX+'%);'+
-      'transition:transform .4s cubic-bezier(.25,.46,.45,.94);'+
-      'cursor:'+(diff===0?'default':'pointer')+';'+
-      '">';
+    var translateX=diff*105;
+    html+='<img src="'+carouselImgs[i]+'" onclick="lightboxGo('+i+')" style="position:absolute;height:78vh;width:auto;max-width:80vw;object-fit:contain;border-radius:12px;transform:translateX('+translateX+'%);transition:transform .4s cubic-bezier(.25,.46,.45,.94);cursor:'+(diff===0?'default':'pointer')+';">';
   }
   html+='<button onclick="lightboxPrev()" style="position:absolute;left:16px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:50%;width:52px;height:52px;font-size:28px;cursor:pointer;z-index:10;line-height:52px;text-align:center;">‹</button>';
   html+='<button onclick="lightboxNext()" style="position:absolute;right:16px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:50%;width:52px;height:52px;font-size:28px;cursor:pointer;z-index:10;line-height:52px;text-align:center;">›</button>';
@@ -705,6 +781,21 @@ function logout(){
   authed=null;document.getElementById('authBadge').classList.add('hidden');document.getElementById('btnAccedi').classList.remove('hidden');
   document.getElementById('btnAggiungi').classList.add('hidden');document.getElementById('fNegozio').disabled=false;
 }
+
+/* HELP */
+function toggleHelp(){
+  var p=document.getElementById('helpPanel');
+  p.classList.toggle('hidden');
+}
+function switchHelpTab(el,tab){
+  document.querySelectorAll('.help-tab').forEach(function(t){t.classList.remove('active');});
+  el.classList.add('active');
+  ['cerca','aggiungi','foto'].forEach(function(t){
+    var el=document.getElementById('help-'+t);
+    if(el) el.classList.toggle('hidden', t!==tab);
+  });
+}
+
 load();
 </script>
 </body>
