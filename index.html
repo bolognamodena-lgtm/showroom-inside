@@ -348,9 +348,13 @@ body{font-family:'DM Sans',sans-serif;background:#0a0f1e;min-height:100vh;color:
   </div>
 </div>
 
-<div class="lightbox hidden" id="lightbox" onclick="closeLightbox()">
+<div class="lightbox hidden" id="lightbox">
   <button class="lightbox-close" onclick="closeLightbox()">✕</button>
-  <img id="lightboxImg" src="" alt=""/>
+  <button class="lightbox-nav prev" onclick="lightboxPrev()">‹</button>
+  <img id="lightboxImg" class="lightbox-img" src="" alt=""/>
+  <button class="lightbox-nav next" onclick="lightboxNext()">›</button>
+  <div class="lightbox-counter" id="lightboxCounter"></div>
+  <div class="lightbox-thumbs" id="lightboxThumbs"></div>
 </div>
 
 <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
@@ -544,7 +548,36 @@ function openModal(id){
 }
 
 function closeModal(){document.getElementById('modal').classList.add('hidden');selectedBox=null;}
-function openLightbox(u){document.getElementById('lightboxImg').src=u;document.getElementById('lightbox').classList.remove('hidden');}
+var lightboxIdx=0;
+
+function openLightbox(url){
+  lightboxIdx=carouselImgs.indexOf(url);
+  if(lightboxIdx===-1) lightboxIdx=0;
+  renderLightbox();
+  document.getElementById('lightbox').classList.remove('hidden');
+}
+
+function renderLightbox(){
+  var img=document.getElementById('lightboxImg');
+  img.src=carouselImgs[lightboxIdx];
+  var counter=document.getElementById('lightboxCounter');
+  counter.textContent=(lightboxIdx+1)+' / '+carouselImgs.length;
+  counter.style.display=carouselImgs.length>1?'block':'none';
+  var nav=document.querySelectorAll('.lightbox-nav');
+  nav.forEach(function(n){n.style.display=carouselImgs.length>1?'flex':'none';});
+  var thumbs=document.getElementById('lightboxThumbs');
+  if(carouselImgs.length>1){
+    thumbs.innerHTML=carouselImgs.map(function(u,i){
+      return '<img class="lightbox-thumb'+(i===lightboxIdx?' active':'')+'" src="'+u+'" onclick="lightboxGo('+i+')" onerror="this.style.display=\'none\'">';
+    }).join('');
+  } else {
+    thumbs.innerHTML='';
+  }
+}
+
+function lightboxGo(idx){lightboxIdx=idx;renderLightbox();}
+function lightboxPrev(){lightboxIdx=(lightboxIdx-1+carouselImgs.length)%carouselImgs.length;renderLightbox();}
+function lightboxNext(){lightboxIdx=(lightboxIdx+1)%carouselImgs.length;renderLightbox();}
 function closeLightbox(){document.getElementById('lightbox').classList.add('hidden');}
 
 function editSelected(){
