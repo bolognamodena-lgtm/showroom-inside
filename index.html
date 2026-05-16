@@ -509,10 +509,11 @@ function openModal(id){
   var car=document.getElementById('modalCarousel');
   if(carouselImgs.length>0){
     var thumbsHtml=carouselImgs.length>1?'<div class="carousel-thumbs">'+carouselImgs.map(function(u,i){return '<img class="carousel-thumb'+(i===0?' active':'')+'" src="'+u+'" onclick="carouselGo('+i+')" onerror="this.style.display=\'none\'">';}).join('')+'</div>':'';
-    car.innerHTML='<div class="carousel-wrap">'+
+    car.innerHTML='<div class="carousel-wrap" onclick="openLightbox(carouselImgs[carouselIdx])">'+
       '<img id="carImg" class="carousel-img" src="'+carouselImgs[0]+'" onerror="this.style.display=\'none\'">'+
-      (carouselImgs.length>1?'<button class="carousel-nav prev" onclick="carouselPrev()">‹</button><button class="carousel-nav next" onclick="carouselNext()">›</button>':'')+
+      (carouselImgs.length>1?'<button class="carousel-nav prev" onclick="event.stopPropagation();carouselPrev()">‹</button><button class="carousel-nav next" onclick="event.stopPropagation();carouselNext()">›</button>':'')+
       (carouselImgs.length>1?'<div class="carousel-counter" id="carCounter">1 / '+carouselImgs.length+'</div>':'')+
+      '<div class="carousel-zoom" onclick="event.stopPropagation();openLightbox(carouselImgs[carouselIdx])">🔍 Apri grande</div>'+
     '</div>'+thumbsHtml;
   } else {
     car.innerHTML='<div class="carousel-wrap"><div class="carousel-placeholder">'+initials(selectedBox.nome)+'</div></div>';
