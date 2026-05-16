@@ -348,13 +348,12 @@ body{font-family:'DM Sans',sans-serif;background:#0a0f1e;min-height:100vh;color:
   </div>
 </div>
 
-<div class="lightbox hidden" id="lightbox">
-  <button onclick="closeLightbox()" style="position:absolute;top:20px;right:24px;color:#fff;font-size:28px;cursor:pointer;background:none;border:none;z-index:5;">✕</button>
-  <button onclick="lightboxPrev()" style="position:absolute;left:20px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:50%;width:52px;height:52px;font-size:26px;cursor:pointer;z-index:5;display:flex;align-items:center;justify-content:center;">‹</button>
-  <img id="lightboxImg" class="lightbox-img" src="" alt=""/>
-  <button onclick="lightboxNext()" style="position:absolute;right:20px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:50%;width:52px;height:52px;font-size:26px;cursor:pointer;z-index:5;display:flex;align-items:center;justify-content:center;">›</button>
-  <div id="lightboxCounter" style="position:absolute;bottom:70px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.5);border-radius:20px;padding:4px 14px;font-size:13px;color:rgba(255,255,255,.8);"></div>
-  <div id="lightboxThumbs" style="position:absolute;bottom:12px;left:50%;transform:translateX(-50%);display:flex;gap:6px;padding:8px;"></div>
+<div id="lightbox" class="hidden" style="position:fixed;inset:0;background:rgba(0,0,0,.97);z-index:300;display:flex;align-items:center;justify-content:center;">
+  <button onclick="closeLightbox()" style="position:absolute;top:16px;right:20px;background:none;border:none;color:#fff;font-size:32px;cursor:pointer;z-index:10;">✕</button>
+  <button onclick="lightboxPrev()" style="position:absolute;left:16px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:50%;width:52px;height:52px;font-size:28px;cursor:pointer;z-index:10;line-height:1;">‹</button>
+  <img id="lightboxImg" style="max-width:88vw;max-height:82vh;object-fit:contain;border-radius:8px;display:block;" src="" alt=""/>
+  <button onclick="lightboxNext()" style="position:absolute;right:16px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:50%;width:52px;height:52px;font-size:28px;cursor:pointer;z-index:10;line-height:1;">›</button>
+  <div id="lightboxCounter" style="position:absolute;bottom:16px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.6);border-radius:20px;padding:4px 14px;font-size:13px;color:rgba(255,255,255,.8);white-space:nowrap;"></div>
 </div>
 
 <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
@@ -545,11 +544,10 @@ var lightboxIdx=0;
 
 function openLightbox(url){
   lightboxIdx=carouselImgs.indexOf(url);
-  if(lightboxIdx===-1) lightboxIdx=0;
-  renderLightbox();
-  document.getElementById('lightbox').classList.remove('hidden');
-  // touch swipe support
+  if(lightboxIdx===-1)lightboxIdx=0;
+  updateLightbox();
   var lb=document.getElementById('lightbox');
+  lb.classList.remove('hidden');
   var startX=0;
   lb.ontouchstart=function(e){startX=e.touches[0].clientX;};
   lb.ontouchend=function(e){
@@ -558,27 +556,14 @@ function openLightbox(url){
   };
 }
 
-function renderLightbox(){
-  var img=document.getElementById('lightboxImg');
-  img.src=carouselImgs[lightboxIdx];
-  var counter=document.getElementById('lightboxCounter');
-  counter.textContent=(lightboxIdx+1)+' / '+carouselImgs.length;
-  counter.style.display=carouselImgs.length>1?'block':'none';
-  var nav=document.querySelectorAll('.lightbox-nav');
-  nav.forEach(function(n){n.style.display=carouselImgs.length>1?'flex':'none';});
-  var thumbs=document.getElementById('lightboxThumbs');
-  if(carouselImgs.length>1){
-    thumbs.innerHTML=carouselImgs.map(function(u,i){
-      return '<img class="lightbox-thumb'+(i===lightboxIdx?' active':'')+'" src="'+u+'" onclick="lightboxGo('+i+')" onerror="this.style.display=\'none\'">';
-    }).join('');
-  } else {
-    thumbs.innerHTML='';
-  }
+function updateLightbox(){
+  document.getElementById('lightboxImg').src=carouselImgs[lightboxIdx];
+  document.getElementById('lightboxCounter').textContent=(lightboxIdx+1)+' / '+carouselImgs.length;
 }
 
-function lightboxGo(idx){lightboxIdx=idx;renderLightbox();}
-function lightboxPrev(){lightboxIdx=(lightboxIdx-1+carouselImgs.length)%carouselImgs.length;renderLightbox();}
-function lightboxNext(){lightboxIdx=(lightboxIdx+1)%carouselImgs.length;renderLightbox();}
+function lightboxPrev(){lightboxIdx=(lightboxIdx-1+carouselImgs.length)%carouselImgs.length;updateLightbox();}
+function lightboxNext(){lightboxIdx=(lightboxIdx+1)%carouselImgs.length;updateLightbox();}
+function lightboxGo(idx){lightboxIdx=idx;updateLightbox();}
 function closeLightbox(){document.getElementById('lightbox').classList.add('hidden');}
 
 function editSelected(){
