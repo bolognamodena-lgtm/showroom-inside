@@ -378,14 +378,7 @@ function cardHover(el,on){
   else{el.style.transform='';el.style.boxShadow='';if(img)img.style.objectFit='cover';if(overlay)overlay.style.opacity='0';if(info){info.style.opacity='0';info.style.transform='translateY(8px)';}}
 }
 
-var SAMPLE_BOXES=[
-  {id:'s1',nome:'Bagno Sospeso Filo',negozio:'SH6 - Lugo',stile:'Moderno',stato:'Disponibile',dimensione:'80 – 120 cm',foto:'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=800&q=80',fotogallery:[],documenti:[],note:'Mobile sospeso con doppio lavabo, specchio retroilluminato incluso.'},
-  {id:'s2',nome:'Vasca Freestanding Ovale',negozio:'SH7 - Ravenna',stile:'Classico',stato:'Disponibile',dimensione:'Oltre 160 cm',foto:'https://images.unsplash.com/photo-1507652313519-d4e9174996dd?w=800&q=80',fotogallery:[],documenti:[],note:'Vasca centro stanza in acrilico bianco lucido.'},
-  {id:'s3',nome:'Doccia Walk-in Nordica',negozio:'SH1 - Bologna/Castenaso',stile:'Nordico',stato:'In trattativa',dimensione:'120 – 160 cm',foto:'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&q=80',fotogallery:[],documenti:[],note:'Cristallo 8mm satinato, piatto in resina.'},
-  {id:'s4',nome:'Bagno Viola Laccato',negozio:'SH3 - Imola Via Galeati',stile:'Moderno',stato:'Disponibile',dimensione:'120 – 160 cm',foto:'https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=800&q=80',fotogallery:[],documenti:[],note:'Mobile laccato viola opaco con top in Laminam.'},
-  {id:'s5',nome:'Bagno Legno e Nero',negozio:'SH2 - Castel San Pietro Terme',stile:'Minimalista',stato:'Disponibile',dimensione:'80 – 120 cm',foto:'https://images.unsplash.com/photo-1620626011761-996317702782?w=800&q=80',fotogallery:[],documenti:[],note:'Mobile in rovere naturale, rubinetteria nera mat.'},
-  {id:'s6',nome:'Bagno Completo Compatto',negozio:'SH5 - Faenza',stile:'Minimalista',stato:'Venduto',dimensione:'Fino a 80 cm',foto:'https://images.unsplash.com/photo-1629079447777-1e605162dc8d?w=800&q=80',fotogallery:[],documenti:[],note:'Soluzione completa per bagni piccoli.'},
-];
+var SAMPLE_BOXES=[];
 
 function load(){
   setStato('Disponibile');
@@ -555,6 +548,14 @@ function openLightbox(url){
   if(lightboxIdx===-1) lightboxIdx=0;
   renderLightbox();
   document.getElementById('lightbox').classList.remove('hidden');
+  // touch swipe support
+  var lb=document.getElementById('lightbox');
+  var startX=0;
+  lb.ontouchstart=function(e){startX=e.touches[0].clientX;};
+  lb.ontouchend=function(e){
+    var diff=startX-e.changedTouches[0].clientX;
+    if(Math.abs(diff)>50){if(diff>0)lightboxNext();else lightboxPrev();}
+  };
 }
 
 function renderLightbox(){
